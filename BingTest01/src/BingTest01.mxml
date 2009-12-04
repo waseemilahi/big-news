@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="787" height="477">
+
+<mx:Script>
+	<![CDATA[
+		import net.bing.WebResult;
+		import net.bing.WebResponse;
+		import net.bing.InstantAnswerResult;
+		import net.bing.AdultOption;
+		import net.bing.SearchResultEvent;
+		import net.bing.SourceType;
+		import net.bing.ArrayOfSourceType;
+		import net.bing.Error;
+		import net.bing.SearchRequest;
+		import net.bing.BingService;
+		import mx.rpc.AsyncToken;
+		import mx.rpc.events.FaultEvent;
+
+		Security.loadPolicyFile("http://api.bing.net/crossdomain.xml");
+		
+		public function search():void
+		{
+			var bing:BingService = new BingService();
+
+			bing.addEventListener(SearchResultEvent.Search_RESULT, searchResult);
+			bing.addEventListener(FaultEvent.FAULT, fault);
+
+			var adult:AdultOption = new AdultOption();
+			adult._AdultOption = "Strict";
+
+			var request:SearchRequest = new SearchRequest();
+			request.AppId = "8FE9AA6D693C08E68F43A1AF8DECCFB092EA54A3";
+
+			request.Query = this.txtQuery.text;
+			
+			request.Market = "en-us";
+			
+			request.Adult = adult;
+			
+			request.Latitude = 40.77;
+			
+			request.Longitude = 73.98;
+			
+			request.Radius = 10000;
+			
+			request.Sources = new ArrayOfSourceType(["Web"]);
+			
+			var token:AsyncToken = bing.search(request);
+		}
+		
+		protected function searchResult(event:SearchResultEvent):void
+		{
+		
+			if (event.result.Web != null)
+			{
+				if (event.result.Web.Results.length != 0)
+				{
+			
+					this.txtResult.text = "";
+					var i:Number;
+					for(i = 0; i < event.result.Web.Results.length; i++){
+					
+						var answer:WebResult = event.result.Web.Results[i];
+						//var answer:InstantAnswerResult = event.result.InstantAnswer.Results[0];
+			
+						//var answerXML:XML = new XML(answer.DisplayUrl);// .InstantAnswerSpecificData);
+			
+						//var answerText:String = answerXML.children()[0].children()[0].valueOf();
+			
+						//var regex:RegExp = /<BR\/>/g;
+			
+						//answerText = answerText.replace(regex, "\n");
+								   	
+						this.txtResult.text += answer.DisplayUrl;//answerText;
+						this.txtResult.text += "\n";
+					}
+			
+				}
+				else {
+					this.txtResult.text = "The Result Array is Empty!!";
+				}
+			
+			}
+			else { 
+				this.txtResult.text = "Search object is NULL!!";
+			}
+			
+		}
+
+		protected function fault(event:FaultEvent):void
+		{
+			this.txtResult.text = "Error While Searching.";
+
+		}
+
+	]]>
+</mx:Script>
+	
+	<mx:Panel x="0" y="0" width="785" height="459" layout="absolute">
+	<mx:TextInput x="10" y="10" width="626" height="37" id="txtQuery" fontSize="20"/>
+	<mx:TextArea x="10" y="55" width="745" height="354" editable="false" id="txtResult"/>
+	<mx:Button x="644" y="10" label="Search" width="111" height="37" click="search()"/>
+	</mx:Panel>
+	
+</mx:WindowedApplication>

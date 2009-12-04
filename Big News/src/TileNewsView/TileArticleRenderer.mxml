@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TileListItemRenderer xmlns:mx="http://www.adobe.com/2006/mxml">
+	<mx:Script>
+		<![CDATA[
+			[Bindable]
+			var data:NewsResult
+		]]>
+	</mx:Script>
+	<mx:Label id="title" text="{data.Title}"/>
+	<mx:Text id="snippet" text="{data.Snippet}"/>
+</mx:TileListItemRenderer>

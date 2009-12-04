@@ -93,5 +93,17 @@
 	<mx:TextArea x="10" y="55" width="745" height="354" editable="false" id="txtResult"/>
 	<mx:Button x="644" y="10" label="Search" width="111" height="37" click="search()"/>
 	</mx:Panel>
-
+  <local:SearchBar>
+	
+	</local:SearchBar>
+	
+	<mx:ViewStack>
+		<local:Headlines id="headlines">
+			
+		</local:Headlines>
+	
+		<local:SearchResults id="searchresults">
+			
+		</local:SearchResults>
+	</mx:ViewStack>
 </mx:Application>

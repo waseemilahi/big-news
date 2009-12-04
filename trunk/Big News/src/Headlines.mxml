@@ -2,6 +2,14 @@
 <mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="appReady()">
 	<mx:Script>
 		<![CDATA[
+			import mx.controls.Alert;
+			import net.bing.ArrayOfSourceType;
+			import net.bing.SearchResultEvent;
+			import mx.rpc.events.FaultEvent;
+			import mx.rpc.AsyncToken;
+			import net.bing.SearchRequest;
+			import net.bing.AdultOption;
+			import net.bing.BingService;
 			import mx.collections.ArrayCollection;
 			import mx.events.ResizeEvent;
 			import net.bing.NewsResult;
@@ -11,13 +19,42 @@
 			
 			private function appReady():void
 			{
+				trace("app ready");
 				this.addEventListener(ResizeEvent.RESIZE, resizeHeadlines);
 				loadHeadlines();
 			}
 			
 			private function loadHeadlines():void
 			{
+				trace("loading headlines");
 				//search logic
+				var bing:BingService = new BingService();
+
+				bing.addEventListener(SearchResultEvent.Search_RESULT, showHeadlines);
+				bing.addEventListener(FaultEvent.FAULT, showHeadlines);
+	
+				var adult:AdultOption = new AdultOption();
+				adult._AdultOption = "Strict";
+	
+				var request:SearchRequest = new SearchRequest();
+				request.AppId = "8FE9AA6D693C08E68F43A1AF8DECCFB092EA54A3";
+	
+				request.Query = "";
+				
+				request.Market = "en-us";
+				
+				request.Adult = adult;
+				
+				request.Latitude = 40.77;
+				
+				request.Longitude = 73.98;
+				
+				request.Radius = 10000;
+				
+				request.Sources = new ArrayOfSourceType(["News"]);
+				
+				var token:AsyncToken = bing.search(request);
+				
 				//attach event listener, make results feed into showHeadlines
 				
 				//below is a fixture in the mean time...
@@ -26,9 +63,32 @@
 			
 			}
 			
-			private function showHeadlines():void
+			private function showHeadlines(e:Event):void
 			{
+				trace("showing headlines (results found from query)");
+				if(e is FaultEvent)
+				{
+					Alert.show("Error While Searching.");
+				}
+				else if(e is SearchResultEvent)
+				{
+					var event:SearchResultEvent = e as SearchResultEvent;
+					if (event.result.News != null)
+					{
+						if (event.result.News.Results.length != 0)
+						{
+							headlinesView.dataProvider = event.result.News.Results;					
+						}
+						else {
+							Alert.show("The Result Array is Empty!!");
+						}
+					
+					}
+					else { 
+						Alert.show("Search object is NULL!!");
+					}
 				
+				} 
 			}
 			
 			private function resizeHeadlines(event:Event):void
@@ -38,5 +98,5 @@
 		]]>
 	</mx:Script>
 	
-	<mx:TileList id="headlinesView"/>
+	<mx:TileList id="headlinesView" itemRenderer="TileNewsView.TileArticleRenderer"/>
 </mx:HBox>

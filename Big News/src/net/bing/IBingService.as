@@ -14,6 +14,7 @@ package net.bing{
     	//Stub functions for the Search operation
     	/**
     	 * Call the operation on the server passing in the arguments defined in the WSDL file
+    	 * @param parameters
     	 * @param Version
     	 * @param Market
     	 * @param UILanguage
@@ -32,7 +33,6 @@ package net.bing{
     	 * @param News
     	 * @param MobileWeb
     	 * @param Translation
-    	 * @param parameters
     	 * @return An AsyncToken
     	 */
     	function search(parameters:SearchRequest):AsyncToken;

@@ -13,7 +13,7 @@
   * Step 2: for the desired operation add a result handler (a function that you have already defined previously)  
   * myService.addSearchEventListener(myResultHandlingFunction);
   * Step 3: Call the operation as a method on the service. Pass the right values as arguments:
-  * myService.Search(myVersion,myMarket,myUILanguage,myQuery,myAppId,myAdult,myLatitude,myLongitude,myRadius,myOptions,mySources,myWeb,myImage,myPhonebook,myVideo,myNews,myMobileWeb,myTranslation,myparameters);
+  * myService.Search(myparameters,myVersion,myMarket,myUILanguage,myQuery,myAppId,myAdult,myLatitude,myLongitude,myRadius,myOptions,mySources,myWeb,myImage,myPhonebook,myVideo,myNews,myMobileWeb,myTranslation);
   *
   * MXML sample code:
   * First you need to map the package where the files were generated to a namespace, usually on the <mx:Application> tag, 
@@ -21,7 +21,7 @@
   * Define the service and within its tags set the request wrapper for the desired operation
   * <srv:BingService id="myService">
   *   <srv:Search_request_var>
-  *		<srv:Search_request Version=myValue,Market=myValue,UILanguage=myValue,Query=myValue,AppId=myValue,Adult=myValue,Latitude=myValue,Longitude=myValue,Radius=myValue,Options=myValue,Sources=myValue,Web=myValue,Image=myValue,Phonebook=myValue,Video=myValue,News=myValue,MobileWeb=myValue,Translation=myValue,parameters=myValue/>
+  *		<srv:Search_request parameters=myValue,Version=myValue,Market=myValue,UILanguage=myValue,Query=myValue,AppId=myValue,Adult=myValue,Latitude=myValue,Longitude=myValue,Radius=myValue,Options=myValue,Sources=myValue,Web=myValue,Image=myValue,Phonebook=myValue,Video=myValue,News=myValue,MobileWeb=myValue,Translation=myValue/>
   *   </srv:Search_request_var>
   * </srv:BingService>
   * Then call the operation for which you have set the request wrapper value above, like this:

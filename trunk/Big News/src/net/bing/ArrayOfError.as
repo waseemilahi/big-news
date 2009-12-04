@@ -26,27 +26,27 @@ package net.bing
 		}
         
         
-		public function addErrorAt(item:Error,index:int):void 
+		public function addErrorAt(item:net.bing.Error,index:int):void 
 		{
 			addItemAt(item,index);
 		}
 
-		public function addError(item:Error):void 
+		public function addError(item:net.bing.Error):void 
 		{
 			addItem(item);
 		} 
 
-		public function getErrorAt(index:int):Error 
+		public function getErrorAt(index:int):net.bing.Error 
 		{
-			return getItemAt(index) as Error;
+			return getItemAt(index) as net.bing.Error;
 		}
 
-		public function getErrorIndex(item:Error):int 
+		public function getErrorIndex(item:net.bing.Error):int 
 		{
 			return getItemIndex(item);
 		}
 
-		public function setErrorAt(item:Error,index:int):void 
+		public function setErrorAt(item:net.bing.Error,index:int):void 
 		{
 			setItemAt(item,index);
 		}

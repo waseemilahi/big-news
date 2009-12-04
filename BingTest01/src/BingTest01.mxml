@@ -3,6 +3,7 @@
 
 <mx:Script>
 	<![CDATA[
+		import net.bing.NewsResult;
 		import net.bing.WebResult;
 		import net.bing.WebResponse;
 		import net.bing.InstantAnswerResult;
@@ -43,7 +44,7 @@
 			
 			request.Radius = 10000;
 			
-			request.Sources = new ArrayOfSourceType(["Web"]);
+			request.Sources = new ArrayOfSourceType(["News"]);
 			
 			var token:AsyncToken = bing.search(request);
 		}
@@ -51,27 +52,18 @@
 		protected function searchResult(event:SearchResultEvent):void
 		{
 		
-			if (event.result.Web != null)
+			if (event.result.News != null)
 			{
-				if (event.result.Web.Results.length != 0)
+				if (event.result.News.Results.length != 0)
 				{
 			
 					this.txtResult.text = "";
 					var i:Number;
-					for(i = 0; i < event.result.Web.Results.length; i++){
+					for(i = 0; i < event.result.News.Results.length; i++){
 					
-						var answer:WebResult = event.result.Web.Results[i];
-						//var answer:InstantAnswerResult = event.result.InstantAnswer.Results[0];
-			
-						//var answerXML:XML = new XML(answer.DisplayUrl);// .InstantAnswerSpecificData);
-			
-						//var answerText:String = answerXML.children()[0].children()[0].valueOf();
-			
-						//var regex:RegExp = /<BR\/>/g;
-			
-						//answerText = answerText.replace(regex, "\n");
-								   	
-						this.txtResult.text += answer.DisplayUrl;//answerText;
+						var answer:NewsResult = event.result.News.Results[i];
+														   	
+						this.txtResult.text += answer.Url;
 						this.txtResult.text += "\n";
 					}
 			

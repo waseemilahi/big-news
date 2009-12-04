@@ -15,7 +15,7 @@
 			import net.bing.NewsResult;
 			
 			[Bindable]
-			var headlines:ArrayCollection //of newsResults
+			public var headlines:ArrayCollection;
 			
 			private function appReady():void
 			{

@@ -98,5 +98,6 @@
 		]]>
 	</mx:Script>
 	
-	<mx:TileList id="headlinesView" itemRenderer="TileNewsView.TileArticleRenderer"/>
+	<mx:TileList id="headlinesView" paddingBottom="15" paddingLeft="10" paddingRight="10" paddingTop="15"
+				 height="100%" width="100%" itemRenderer="TileNewsView.TileArticleRenderer"/>
 </mx:HBox>

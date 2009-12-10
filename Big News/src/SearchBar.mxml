@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml">
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="810" height="430">
 
 
 	<mx:Script>
@@ -14,7 +14,20 @@
 			import net.bing.AdultOption;
 			import net.bing.BingService;
 			import mx.core.Application;
+			import mx.controls.Alert;
 			
+			public var adult:AdultOption = new AdultOption();
+			
+				
+			public var sortOption:NewsSortOption = new NewsSortOption();
+							
+			public var newsRequest:NewsRequest = new NewsRequest();
+			
+			public function setCategory(category:String):void
+			{
+				newsRequest.Category = "rt_"+ category;
+			}
+						
 			public function executeQuery():void
 			{
 				//search logic
@@ -22,20 +35,14 @@
 
 				bing.addEventListener(SearchResultEvent.Search_RESULT, Application.application.searchresults.showResults);
 				bing.addEventListener(FaultEvent.FAULT, Application.application.searchresults.showResults);
-	
-				var adult:AdultOption = new AdultOption();
+		
 				adult._AdultOption = "Strict";
-				
-				var sortOption:NewsSortOption = new NewsSortOption();
 				sortOption._NewsSortOption = "Date";
-				
-				var newsRequest:NewsRequest = new NewsRequest();
-				newsRequest.Category = "rt_Sports";
+				//newsRequest.Category = "rt_Health";
 				newsRequest.Offset = 0;
 				newsRequest.Count = 10;
 				newsRequest.SortBy = sortOption;
-				
-	
+		
 				var request:SearchRequest = new SearchRequest();
 				request.AppId = "8FE9AA6D693C08E68F43A1AF8DECCFB092EA54A3";
 	
@@ -61,10 +68,33 @@
 			}
 		]]>
 	</mx:Script>
-	<mx:Text text="Categories go here, perhaps change DataType"/>
 	<mx:HBox>
-		<mx:Text text="Big News"/>
-		<mx:TextInput id="query" editable="true"/>
-		<mx:Button click="executeQuery()"/>
+		 <mx:LinkButton label="Business" color="#0000FF" fontWeight="bold" 
+            click="setCategory('Business');"/>
+         <mx:LinkButton label="Entertainment" color="#0000FF" fontWeight="bold" 
+            click="setCategory('Entertainment');"/>
+         <mx:LinkButton label="Health" color="#0000FF" fontWeight="bold" 
+            click="setCategory('Health');"/>
+         <mx:LinkButton label="Politics" color="#0000FF" fontWeight="bold" 
+            click="setCategory('Political');"/>
+         <mx:LinkButton label="Scientific" color="#0000FF" fontWeight="bold" 
+            click="setCategory('Scientific');"/>
+         <mx:LinkButton label="Sports" color="#0000FF" fontWeight="bold" 
+            click="setCategory('Sports');"/>
+         <mx:LinkButton label="United States" color="#0000FF" fontWeight="bold" 
+            click="setCategory('US');"/>
+         <mx:LinkButton label="World" color="#0000FF" fontWeight="bold" 
+            click="setCategory('World');"/>
+         <mx:LinkButton label="Local" color="#0000FF" fontWeight="bold" 
+            click="setCategory('Local');"/>
+         <mx:LinkButton label="Science and Tech" color="#0000FF" fontWeight="bold" 
+            click="setCategory('ScienceAndTechnology');"/>
+		
 	</mx:HBox>
+	<mx:HBox width="806" height="52">
+		<mx:Text text="BigNews" width="108" height="39" fontSize="19" color="#1D606E" textAlign="center" fontWeight="bold"/>
+		<mx:TextInput id="query" editable="true" width="579" height="39" fontSize="18"/>
+		<mx:Button label="Search" click="executeQuery()" width="101" height="36"/>
+	</mx:HBox>
+	
 </mx:VBox>

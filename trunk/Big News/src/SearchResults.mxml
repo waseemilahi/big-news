@@ -3,10 +3,15 @@
 
 	<mx:Script>
 		<![CDATA[
+			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
 			import net.bing.SearchResultEvent;
 			import mx.rpc.events.FaultEvent;
 			import mx.core.Application;
+			
+			[Bindable]
+			private var historyData:ArrayCollection = new ArrayCollection();
+			
 			public function showResults(e:Event):void
 			{
 				trace("showing search results (results found from query)");
@@ -24,7 +29,8 @@
 					{
 						if (event.result.News.Results.length != 0)
 						{
-							list.dataProvider = event.result.News.Results;				
+							list.dataProvider = event.result.News.Results;	
+							historyData.addItemAt(event.result, 0);					
 						}
 						else {
 							Alert.show("The Result Array is Empty!!");
@@ -39,6 +45,9 @@
 		]]>
 	</mx:Script>
 	
-	<mx:List id="list" itemRenderer="TileNewsView.SearchResultsItemRenderer"/>
+	<mx:List id="list" height="100%" width="80%" itemRenderer="TileNewsView.SearchResultsItemRenderer"/>
+	
+	<mx:List id="history" height="100%" width="20%" itemRenderer="SearchResults.HistoryItemRenderer"
+		dataProvider="{historyData}"/>
 	
 </mx:HDividedBox>

@@ -4,6 +4,8 @@
 
 	<mx:Script>
 		<![CDATA[
+			import net.bing.NewsSortOption;
+			import net.bing.NewsRequest;
 			import mx.rpc.events.FaultEvent;
 			import net.bing.SearchResultEvent;
 			import mx.rpc.AsyncToken;
@@ -23,15 +25,27 @@
 	
 				var adult:AdultOption = new AdultOption();
 				adult._AdultOption = "Strict";
+				
+				var sortOption:NewsSortOption = new NewsSortOption();
+				sortOption._NewsSortOption = "Date";
+				
+				var newsRequest:NewsRequest = new NewsRequest();
+				newsRequest.Category = "rt_Sports";
+				newsRequest.Offset = 0;
+				newsRequest.Count = 10;
+				newsRequest.SortBy = sortOption;
+				
 	
 				var request:SearchRequest = new SearchRequest();
 				request.AppId = "8FE9AA6D693C08E68F43A1AF8DECCFB092EA54A3";
 	
 				request.Query = query.text;
-				
+										
 				request.Market = "en-us";
 				
 				request.Adult = adult;
+				
+				request.News = newsRequest;
 				
 				request.Latitude = 40.77;
 				
@@ -40,6 +54,8 @@
 				request.Radius = 10000;
 				
 				request.Sources = new ArrayOfSourceType(["News"]);
+				
+				//request.News.Category = "rt_Health";
 				
 				var token:AsyncToken = bing.search(request);
 			}

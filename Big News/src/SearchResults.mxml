@@ -1,4 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:HDividedBox xmlns:mx="http://www.adobe.com/2006/mxml">
+
+	<mx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			import net.bing.SearchResultEvent;
+			import mx.rpc.events.FaultEvent;
+			import mx.core.Application;
+			public function showResults(e:Event):void
+			{
+				trace("showing search results (results found from query)");
+				if(e is FaultEvent)
+				{
+					Alert.show("Error While Searching.");
+					return;
+				}
+				else if(e is SearchResultEvent)
+				{
+					var event:SearchResultEvent = e as SearchResultEvent;
+					//change view
+					Application.application.resultViewStack.selectedIndex = 1;
+					if (event.result.News != null)
+					{
+						if (event.result.News.Results.length != 0)
+						{
+							list.dataProvider = event.result.News.Results;				
+						}
+						else {
+							Alert.show("The Result Array is Empty!!");
+						}
+					}
+					else { 
+						Alert.show("Search object is NULL!!");
+					}
+				
+				}
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:List id="list" itemRenderer="TileNewsView.SearchResultsItemRenderer"/>
 	
 </mx:HDividedBox>

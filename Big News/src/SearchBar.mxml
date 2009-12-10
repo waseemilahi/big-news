@@ -1,4 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml">
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml">
+
+
+	<mx:Script>
+		<![CDATA[
+			import mx.rpc.events.FaultEvent;
+			import net.bing.SearchResultEvent;
+			import mx.rpc.AsyncToken;
+			import net.bing.ArrayOfSourceType;
+			import net.bing.SearchRequest;
+			import net.bing.AdultOption;
+			import net.bing.BingService;
+			import mx.core.Application;
+			
+			public function executeQuery():void
+			{
+				//search logic
+				var bing:BingService = new BingService();
+
+				bing.addEventListener(SearchResultEvent.Search_RESULT, Application.application.searchresults.showResults);
+				bing.addEventListener(FaultEvent.FAULT, Application.application.searchresults.showResults);
 	
-</mx:HBox>
+				var adult:AdultOption = new AdultOption();
+				adult._AdultOption = "Strict";
+	
+				var request:SearchRequest = new SearchRequest();
+				request.AppId = "8FE9AA6D693C08E68F43A1AF8DECCFB092EA54A3";
+	
+				request.Query = query.text;
+				
+				request.Market = "en-us";
+				
+				request.Adult = adult;
+				
+				request.Latitude = 40.77;
+				
+				request.Longitude = 73.98;
+				
+				request.Radius = 10000;
+				
+				request.Sources = new ArrayOfSourceType(["News"]);
+				
+				var token:AsyncToken = bing.search(request);
+			}
+		]]>
+	</mx:Script>
+	<mx:Text text="Categories go here, perhaps change DataType"/>
+	<mx:HBox>
+		<mx:Text text="Big News"/>
+		<mx:TextInput id="query" editable="true"/>
+		<mx:Button click="executeQuery()"/>
+	</mx:HBox>
+</mx:VBox>

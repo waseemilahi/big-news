@@ -6,14 +6,14 @@
 
 package net.bing
 {
-	import mx.utils.ObjectProxy;
-	import flash.utils.ByteArray;
+	import flash.events.EventDispatcher;
+	
 	import mx.rpc.soap.types.*;
 	/**
 	 * Wrapper class for a operation required type
 	 */
-    
-	public class NewsResult
+    [Bindable]
+	public class NewsResult extends EventDispatcher
 	{
 		/**
 		 * Constructor, initializes the type class

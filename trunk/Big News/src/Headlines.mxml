@@ -19,7 +19,7 @@
 			
 			private function appReady():void
 			{
-				trace("app ready");
+				trace("app rready");
 				this.addEventListener(ResizeEvent.RESIZE, resizeHeadlines);
 				loadHeadlines();
 			}

@@ -10,6 +10,12 @@
 			import net.bing.SearchResultEvent;
 			import mx.rpc.events.FaultEvent;
 			import mx.core.Application;
+			import PagableArrayCollection.PagableArrayCollection;
+			
+			[Bindable]
+			public var pagableData:PagableArrayCollection = new PagableArrayCollection(
+						[ //todo.....
+						]);
 			
 			[Bindable]
 			private var historyData:ArrayCollection = new ArrayCollection();

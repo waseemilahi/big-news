@@ -33,6 +33,9 @@
 						
 			public function executeQuery():void
 			{
+				
+				if(query.text.length < 1)return;
+				
 				//search logic
 				var bing:BingService = new BingService();
 
@@ -48,7 +51,7 @@
 		
 				var request:SearchRequest = new SearchRequest();
 				request.AppId = "8FE9AA6D693C08E68F43A1AF8DECCFB092EA54A3";
-	
+					
 				request.Query = query.text;
 										
 				request.Market = "en-us";
@@ -74,19 +77,19 @@
 							{name: "Business", queryString: "Business"}, 
 							{name: "Entertainment", queryString: "Entertainment"}, 
 							{name: "Health", queryString: "Health"}, 
-							{name: "Politics", queryString: "Politics"}, 
+							{name: "Politics", queryString: "Political"}, 
 							{name: "Scientific", queryString: "Scientific"}, 
 							{name: "Sports", queryString: "Sports"}, 
-							{name: "US", queryString: "US"}, 
+							{name: "United States", queryString: "US"}, 
 							{name: "World", queryString: "World"}, 
 							{name: "Local", queryString: "Local"}, 
-							{name: "Science", queryString: "Science"}]);
+							{name: "Science And Tech", queryString: "ScienceAndTechnology"}]);
 		]]>
 	</mx:Script>
     <mx:TabBar id="categoryBar" dataProvider="{buttons}" labelField="name" fontWeight="bold"  itemClick="setCategory(buttons[categoryBar.selectedIndex].queryString)"/>
 		
 	
-	<mx:HBox width="806" height="52">
+	<mx:HBox width="813" height="52">
 		<mx:Text text="BigNews" width="108" height="39" fontSize="19" color="#1D606E" textAlign="center" fontWeight="bold"/>
 		<mx:TextInput id="query" editable="true" width="579" height="39" fontSize="22"/>
 		<mx:Button label="Search" click="executeQuery()" width="101" height="39" fontSize="18"/>

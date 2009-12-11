@@ -14,12 +14,12 @@
 			[Bindable]
 			private var historyData:ArrayCollection = new ArrayCollection();
 			
+			//Flex calls this a Dictionary, but its commonly known as a Hashmap
 			[Bindable]
 			public var urlHash:Dictionary = new Dictionary();
 			
 			public function showResults(e:Event):void
 			{
-				trace("showing search results (results found from query)");
 				if(e is FaultEvent)
 				{
 					Alert.show("Error While Searching.");
@@ -28,7 +28,8 @@
 				else if(e is SearchResultEvent)
 				{
 					var event:SearchResultEvent = e as SearchResultEvent;
-					//change view
+					
+					//change view in main view stack
 					Application.application.resultViewStack.selectedIndex = 1;
 					if (event.result.News != null)
 					{
@@ -45,10 +46,13 @@
 								if (urlHash[nr.Url] == undefined)
 								{
 									urlHash[nr.Url] = new ArrayCollection();
+									//Create a special Object to hold the NewsResult,
+									//but also it's parent, which is a SearchResponse.
+									//This allows the program to use the previous
+									//search results.
 									var obj:Object = new Object();
 									obj.parent = resp;
 									obj.newsresult = nr;
-									trace("O: " +obj +" D " +obj.parent +" I " +obj.newsresult);
 									ArrayCollection(urlHash[nr.Url]).addItem(obj);
 								}
 								else
@@ -68,6 +72,9 @@
 				}
 			}
 			
+			/**
+			 * Executed when the user clicks on the list of previous searches
+			 */ 
 			public function historyListClick(e:Event):void
 			{
 				var resp:SearchResponse = historyData.getItemAt(history.selectedIndex) as SearchResponse;			

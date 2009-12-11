@@ -4,6 +4,7 @@
 
 	<mx:Script>
 		<![CDATA[
+			import mx.collections.ArrayCollection;
 			import net.bing.NewsSortOption;
 			import net.bing.NewsRequest;
 			import mx.rpc.events.FaultEvent;
@@ -25,7 +26,9 @@
 			
 			public function setCategory(category:String):void
 			{
-				newsRequest.Category = "rt_"+ category;
+				if(category.length > 0)
+					newsRequest.Category = "rt_"+ category;
+				else newsRequest.Category = "";
 			}
 						
 			public function executeQuery():void
@@ -66,35 +69,27 @@
 				
 				var token:AsyncToken = bing.search(request);
 			}
+			[Bindable]
+		public var buttons:ArrayCollection = new ArrayCollection([{name: "All", queryString: ""},
+							{name: "Business", queryString: "Business"}, 
+							{name: "Entertainment", queryString: "Entertainment"}, 
+							{name: "Health", queryString: "Health"}, 
+							{name: "Politics", queryString: "Politics"}, 
+							{name: "Scientific", queryString: "Scientific"}, 
+							{name: "Sports", queryString: "Sports"}, 
+							{name: "US", queryString: "US"}, 
+							{name: "World", queryString: "World"}, 
+							{name: "Local", queryString: "Local"}, 
+							{name: "Science", queryString: "Science"}]);
 		]]>
 	</mx:Script>
-	<mx:HBox>
-		 <mx:LinkButton label="Business" color="#0000FF" fontWeight="bold" 
-            click="setCategory('Business');"/>
-         <mx:LinkButton label="Entertainment" color="#0000FF" fontWeight="bold" 
-            click="setCategory('Entertainment');"/>
-         <mx:LinkButton label="Health" color="#0000FF" fontWeight="bold" 
-            click="setCategory('Health');"/>
-         <mx:LinkButton label="Politics" color="#0000FF" fontWeight="bold" 
-            click="setCategory('Political');"/>
-         <mx:LinkButton label="Scientific" color="#0000FF" fontWeight="bold" 
-            click="setCategory('Scientific');"/>
-         <mx:LinkButton label="Sports" color="#0000FF" fontWeight="bold" 
-            click="setCategory('Sports');"/>
-         <mx:LinkButton label="United States" color="#0000FF" fontWeight="bold" 
-            click="setCategory('US');"/>
-         <mx:LinkButton label="World" color="#0000FF" fontWeight="bold" 
-            click="setCategory('World');"/>
-         <mx:LinkButton label="Local" color="#0000FF" fontWeight="bold" 
-            click="setCategory('Local');"/>
-         <mx:LinkButton label="Science and Tech" color="#0000FF" fontWeight="bold" 
-            click="setCategory('ScienceAndTechnology');"/>
+    <mx:TabBar id="categoryBar" dataProvider="{buttons}" labelField="name" fontWeight="bold"  itemClick="setCategory(buttons[categoryBar.selectedIndex].queryString)"/>
 		
-	</mx:HBox>
+	
 	<mx:HBox width="806" height="52">
 		<mx:Text text="BigNews" width="108" height="39" fontSize="19" color="#1D606E" textAlign="center" fontWeight="bold"/>
-		<mx:TextInput id="query" editable="true" width="579" height="39" fontSize="18"/>
-		<mx:Button label="Search" click="executeQuery()" width="101" height="36"/>
+		<mx:TextInput id="query" editable="true" width="579" height="39" fontSize="22"/>
+		<mx:Button label="Search" click="executeQuery()" width="101" height="39" fontSize="18"/>
 	</mx:HBox>
 	
 </mx:VBox>

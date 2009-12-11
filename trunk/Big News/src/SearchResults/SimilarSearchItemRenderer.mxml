@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" dataChange="dataChangeHandler(event)"
+	minHeight="120" minWidth="100">
+
+	<mx:Script>
+		<![CDATA[
+			import net.bing.SearchResponse;
+			import net.bing.NewsResult;
+			
+			[Bindable]
+			private var news:NewsResult;
+			
+			[Bindable]
+			private var searchTerms:String;
+			
+			/*
+			 * Flex was complaining about binding {data.newsresult.Title} and {...Snippet},
+			 * so instead we set the property ourselves.
+			 */ 
+			private function dataChangeHandler(event:Event):void
+			{
+				if (data != null)
+				{
+					news = data.newsresult;
+					var sr:SearchResponse = data.parent as SearchResponse;
+					searchTerms = sr.Query.SearchTerms;
+				}
+			}
+		]]>
+	</mx:Script>
+
+	<mx:Text text="Search terms: {searchTerms}" selectable="false"
+		truncateToFit="true" width="100%" height="100%"/>
+	<mx:Text text="Title: {news.Title}" selectable="false"
+		truncateToFit="true" width="100%" height="100%"/>
+	<mx:TextArea text="Snippet: {news.Snippet}" selectable="false"
+		editable="false" width="100%" height="100%"/>
+</mx:VBox>

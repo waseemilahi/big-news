@@ -1,4 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml">
-	<mx:Text text="{data.Title}" selectable="false"/>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" borderStyle="solid" minHeight="100"
+	dataChange="dataChangeHandler(event)">
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.core.Application;
+		
+			[Bindable]
+			private var linkButtonLabel:String = "";
+		
+			private function dataChangeHandler(event:Event):void
+			{
+				var dict:Dictionary = Application.application.searchresults.urlHash;
+				if (dict[data.Url] != undefined)
+				{
+					var relatedSearches:ArrayCollection = dict[data.Url];
+					//this array is filled with Object with two attributes:
+					//parent - the SearchResponse
+					//newsresult - the NewsResult
+					//you can do nifty things with this data if you need to
+					
+					if (relatedSearches.length > 1)
+					{
+						linkButton.enabled = true;
+						linkButtonLabel = relatedSearches.length +" other matches found";
+					} else if (relatedSearches.length == 1)
+					{
+						linkButton.enabled = true;
+						linkButtonLabel = "1 other match found";
+					}
+					else
+					{
+						linkButton.enabled = false;
+						linkButtonLabel = "";
+					}
+				}
+				else
+				{
+					linkButton.enabled = false;
+					linkButtonLabel = "";
+				}
+			}
+			
+			private function linkButtonClickHandler(event:Event):void
+			{
+				trace("DO SOMETHING COOL");
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:Text text="{data.Title}" selectable="false" width="100%" height="100%"/>
+	<mx:LinkButton id="linkButton" label="{linkButtonLabel}" click="linkButtonClickHandler(event)"/>
+	<mx:TextArea text="{data.Snippet}" selectable="false" editable="false" width="100%" height="100%"/>
 </mx:VBox>

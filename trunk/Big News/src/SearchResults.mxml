@@ -3,6 +3,7 @@
 
 	<mx:Script>
 		<![CDATA[
+			import net.bing.NewsResult;
 			import net.bing.SearchResponse;
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
@@ -12,6 +13,9 @@
 			
 			[Bindable]
 			private var historyData:ArrayCollection = new ArrayCollection();
+			
+			[Bindable]
+			private var urlHash:Dictionary = new Dictionary();
 			
 			public function showResults(e:Event):void
 			{
@@ -34,6 +38,20 @@
 							history.selectedIndex = 0;
 							var resp:SearchResponse = historyData.getItemAt(0) as SearchResponse;			
 							list.dataProvider = resp.News.Results;
+							
+							for (var i:int = 0; i < resp.News.Results.length; i++)
+							{
+								var nr:NewsResult = resp.News.Results.getNewsResultAt(i);
+								if (urlHash[nr.Url] == undefined)
+								{
+									urlHash[nr.Url] = new ArrayCollection();
+									ArrayCollection(urlHash[nr.Url]).addItem(nr);
+								}
+								else
+								{
+									ArrayCollection(urlHash[nr.Url]).addItem(nr);
+								}
+							}
 						}
 						else {
 							Alert.show("The Result Array is Empty!!");

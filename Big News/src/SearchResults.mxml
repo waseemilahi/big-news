@@ -15,7 +15,7 @@
 			private var historyData:ArrayCollection = new ArrayCollection();
 			
 			[Bindable]
-			private var urlHash:Dictionary = new Dictionary();
+			public var urlHash:Dictionary = new Dictionary();
 			
 			public function showResults(e:Event):void
 			{
@@ -45,7 +45,11 @@
 								if (urlHash[nr.Url] == undefined)
 								{
 									urlHash[nr.Url] = new ArrayCollection();
-									ArrayCollection(urlHash[nr.Url]).addItem(nr);
+									var obj:Object = new Object();
+									obj.parent = resp;
+									obj.newsresult = nr;
+									trace("O: " +obj +" D " +obj.parent +" I " +obj.newsresult);
+									ArrayCollection(urlHash[nr.Url]).addItem(obj);
 								}
 								else
 								{

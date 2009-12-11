@@ -43,7 +43,7 @@
 				sortOption._NewsSortOption = "Date";
 				//newsRequest.Category = "rt_Health";
 				newsRequest.Offset = 0;
-				newsRequest.Count = 10;
+				newsRequest.Count = 15;
 				newsRequest.SortBy = sortOption;
 		
 				var request:SearchRequest = new SearchRequest();

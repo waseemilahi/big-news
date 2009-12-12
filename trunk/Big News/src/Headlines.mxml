@@ -17,7 +17,7 @@
 			[Bindable]
 			public var headlines:ArrayCollection //of newsResults
 			
-			private function appReady():void
+			public function appReady():void
 			{
 				trace("app rready");
 				this.addEventListener(ResizeEvent.RESIZE, resizeHeadlines);

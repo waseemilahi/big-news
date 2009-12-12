@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" height="100" width="100%" horizontalScrollPolicy="off">
-	<mx:Text id="title" text="{data.Title}" selectable="false" truncateToFit="true" styleName="ArticleTitle"/>
-	<mx:TextArea id="snippet" text="{data.Snippet}" editable="false" selectable="false" styleName="ArticleSnippet" height="{snippet.textHeight}"/>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" minWidth="200" minHeight="100">
+	<mx:Text id="title" text="{data.Title}" selectable="false" styleName="ArticleTitle" width="100%"/>
+	<mx:TextArea id="snippet" text="{data.Snippet}" editable="false" selectable="false" styleName="ArticleSnippet" width="100%"/>
 </mx:VBox>

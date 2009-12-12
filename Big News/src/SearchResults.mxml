@@ -35,6 +35,7 @@
 					
 					//change view in main view stack
 					Application.application.resultViewStack.selectedIndex = 1;
+					
 					if (event.result.News != null)
 					{
 						if (event.result.News.Results.length != 0)
@@ -46,6 +47,8 @@
 							Application.application.searchbar.runningTotal = event.result.News.Total;
 									
 							list.dataProvider = resp.News.Results;
+							
+							pageNumber.text = "Page " + Application.application.searchbar.pageCount + " of "+ Math.ceil( event.result.News.Total/15);
 							
 							for (var i:int = 0; i < resp.News.Results.length; i++)
 							{
@@ -70,10 +73,13 @@
 						}
 						else {
 							Alert.show("The Result Array is Empty!!");
+							pageNumber.text = "Page " + "1" + " of "+ "1";
 						}
+						
 					}
 					else { 
 						Alert.show("Search object is NULL!!");
+						pageNumber.text = "Page " + "1" + " of "+ "1";
 					}
 				
 				}
@@ -107,6 +113,6 @@
 	<mx:Button label="&lt;&lt;" click="Application.application.searchbar.decrementOffset();" />
 	<mx:Button label=">>" click="Application.application.searchbar.incrementOffset();"/>
 	</mx:HBox>
-    <mx:Text text="Page 1 0f 1" x="317" y="470"/>
+    <mx:Text id="pageNumber" x="317" y="470"/>
     
 </mx:Canvas>

@@ -20,6 +20,8 @@
 			public var adult:AdultOption = new AdultOption();
 			
 			public var runningTotal:Number = 0;
+			
+			public var pageCount:Number = 1;
 				
 			public var sortOption:NewsSortOption = new NewsSortOption();
 							
@@ -34,9 +36,11 @@
 			
 			public function incrementOffset():void
 			{
-				if(newsRequest.Offset < (runningTotal - 15))
+				if(newsRequest.Offset <= (runningTotal - 15))
 				{
 					newsRequest.Offset +=15;
+					pageCount++;
+					Application.application.searchresults.pageNumber.text = "Page " + pageCount + " of "+ Math.ceil(runningTotal/15);
 					newQuery();
 				}
 				
@@ -47,6 +51,8 @@
 				if(newsRequest.Offset >= 15)
 				{
 					newsRequest.Offset -=15;
+					pageCount--;
+					Application.application.searchresults.pageNumber.text = "Page " + pageCount + " of "+ Math.ceil(runningTotal/15);
 					newQuery();
 				}
 			}
@@ -98,6 +104,8 @@
 				
 				if(query.text.length < 1)return;
 				
+				pageCount = 1;
+				
 				//search logic
 				var bing:BingService = new BingService();
 
@@ -138,7 +146,8 @@
 			public function goHome():void
 			{
 				Application.application.resultViewStack.selectedIndex = 0;
-				Application.application.headlines.appReady();			
+				Application.application.headlines.appReady();	
+				query.text = "";		
 			}
 			
 			[Bindable]

@@ -97,7 +97,7 @@
 		
 	
 	<mx:HBox width="813" height="52">
-		<mx:Text text="BigNews" width="108" height="39" click="goHome();" fontSize="19" color="#1D606E" textAlign="center" fontWeight="bold"/>
+		<mx:Label text="BigNews" width="108" height="39" click="goHome();" fontSize="19" color="#1D606E" textAlign="center" fontWeight="bold"/>
 		<mx:TextInput id="query" editable="true" width="579" height="39" fontSize="22"/>
 		<mx:Button label="Search" click="executeQuery()" width="101" height="39" fontSize="18"/>
 	</mx:HBox>

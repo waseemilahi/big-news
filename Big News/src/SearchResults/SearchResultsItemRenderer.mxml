@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" borderStyle="solid" minHeight="100"
-	dataChange="dataChangeHandler(event)">
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" borderStyle="solid" width="100%" height="100%" minHeight="150" dataChange="dataChangeHandler(event)">
 	
 	<mx:Script>
 		<![CDATA[
@@ -69,6 +68,8 @@
 				similarList.percentHeight = 100;
 				similarList.percentWidth = 100;
 				similarList.doubleClickEnabled = true;
+				similarList.columnCount = 2;
+				similarList.rowCount = 2;
 				similarList.addEventListener(MouseEvent.DOUBLE_CLICK, similarSearchListClickHandler);
 				similarList.itemRenderer = new ClassFactory(SimilarSearchItemRenderer);
 				var tw:TitleWindow = new TitleWindow();
@@ -104,5 +105,6 @@
 	
 	<mx:Text text="{data.Title}" selectable="false" width="100%" truncateToFit="true" styleName="ArticleTitle"/>
 	<mx:LinkButton id="linkButton" label="{linkButtonLabel}" click="linkButtonClickHandler(event)" styleName="SimilarSearchLinkButton"/>
-	<mx:TextArea text="{data.Snippet}" selectable="false" editable="false" width="100%" height="100%" styleName="ArticleSnippet"/>
+	<mx:Spacer height="100%"/>
+	<mx:TextArea text="{data.Snippet}" selectable="false" editable="false" width="100%" styleName="ArticleSnippet"/>
 </mx:VBox>

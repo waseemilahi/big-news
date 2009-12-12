@@ -3,6 +3,10 @@
 	creationComplete="setProgramStyles()">
 	<mx:Script>
 		<![CDATA[
+			import mx.core.IFlexDisplayObject;
+			import mx.containers.TitleWindow;
+			import mx.managers.PopUpManager;
+			import mx.events.CloseEvent;
 			Security.loadPolicyFile("http://api.bing.net/crossdomain.xml");
 			private function appLoaded():void
 			{
@@ -11,40 +15,67 @@
 			
 			private function setProgramStyles():void
 			{
-				StyleManager.getStyleDeclaration(".TabNavigation").getStyle("fontSize");
+				var tw:TitleWindow = TitleWindow(PopUpManager.createPopUp(this, StyleSelector, false));
+				tw.title = "Similar Searches";
+				tw.showCloseButton = true;
+				tw.addEventListener(CloseEvent.CLOSE, removeSimilarSearchPopUp);
+			}
+			
+			/**
+			 * Remove the PopUpWindow when the user clicks the X
+			 */ 
+			private function removeSimilarSearchPopUp(event:CloseEvent):void
+			{
+				PopUpManager.removePopUp(IFlexDisplayObject(event.currentTarget));
+			}
+			
+			private function doSetProgramStyles(fontOffset:int):void
+			{
+				StyleManager.getStyleDeclaration(".BigNewsHeading")
 			}
 		]]>
 	</mx:Script>
 	
 	<mx:Style>
 		.BigNewsHeading {
-			font-weight:bold;
 			font-size:20;
+			font-weight:bold;
 		}
 		.TabNavigation {
-			font-weight:normal;
 			font-size:12;
+			font-weight:normal;
 		}
 		.SearchBarInput {
 			font-size:12;
+			font-weight:normal;
 		}
 		.SearchResultPageButtons {
+			font-size:12;
+			font-weight:bold;
 		}
 		.SearchResultPageNumbers {
+			font-size:10;
+			font-weight:normal;
 		}
 		.SimilarSearchLinkButton {
+			font-size:10;
+			font-weight:normal;
 		}
 		.ArticleTitle {
+			font-size:14;
 			font-weight:bold;
 		}
 		.ArticleSnippet {
+			font-size:12;
 			font-weight:normal;
 		}
 		.SearchButton {
 			font-size:12;
+			font-weight:bold;
 		}
 		.HistoryQuery {
 			font-size:12;
+			font-weight:normal;
 		}
 	</mx:Style>
 	

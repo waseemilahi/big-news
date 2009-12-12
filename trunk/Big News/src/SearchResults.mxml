@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="740" height="572">
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" xmlns:local="*" xmlns:SearchResults="SearchResults.*">
 
 	<mx:Script>
 		<![CDATA[
@@ -45,8 +45,13 @@
 							var resp:SearchResponse = historyData.getItemAt(0) as SearchResponse;	
 							
 							Application.application.searchbar.runningTotal = event.result.News.Total;
-									
-							list.dataProvider = resp.News.Results;
+							if (searchresultsTN.selectedIndex == 0)
+							{	
+								list.dataProvider = resp.News.Results;
+							} else
+							{
+								datesort.dataProvider = resp.News.Results;
+							}
 							
 							pageNumber.text = "Page " + Application.application.searchbar.pageCount + " of "+ Math.ceil( event.result.News.Total/15);
 							
@@ -91,28 +96,44 @@
 			public function historyListClick(e:Event):void
 			{
 				var resp:SearchResponse = historyData.getItemAt(history.selectedIndex) as SearchResponse;			
-				list.dataProvider = resp.News.Results;
+				if (searchresultsTN.selectedIndex == 0)
+				{	
+					list.dataProvider = resp.News.Results;
+				} else
+				{
+					datesort.dataProvider = resp.News.Results;
+				}
 			}
 		]]>
 	</mx:Script>
 	
-	<mx:HDividedBox liveDragging="false" width="100%" height="429">
+	<mx:HDividedBox liveDragging="false" width="100%" height="100%" minHeight="500">
 		
-	
-	<mx:HBox horizontalAlign="center" >
-	<mx:List id="list" width="80%" itemRenderer="SearchResults.SearchResultsItemRenderer" height="419"/>
-	
-	<mx:List id="history" itemRenderer="SearchResults.HistoryItemRenderer"
-		dataProvider="{historyData}" click="historyListClick(event)" height="420"/>
-    </mx:HBox>
-    
+		<mx:TabNavigator id="searchresultsTN" selectedIndex="0" width="80%" height="100%"
+			creationPolicy="all">
+		
+		<mx:VBox label="Sort by Relevance" width="100%" height="100%">
+			<mx:List id="list" width="100%" itemRenderer="SearchResults.SearchResultsItemRenderer" height="100%"/>
+		</mx:VBox>
+		
+		<mx:VBox  label="Sort by Date" width="100%" height="100%">
+			<SearchResults:DateSort id="datesort" width="100%" height="100%"/>
+		</mx:VBox>
+		
+		</mx:TabNavigator>
+		
+		<mx:List id="history" itemRenderer="SearchResults.HistoryItemRenderer"
+			dataProvider="{historyData}" click="historyListClick(event)" width="20%" height="100%"/>
+	    
     </mx:HDividedBox>
     
-    <mx:HBox horizontalAlign="center" x="304" y="437" height="25">    
-    
-	<mx:Button label="&lt;&lt;" click="Application.application.searchbar.decrementOffset();" />
-	<mx:Button label=">>" click="Application.application.searchbar.incrementOffset();"/>
+    <mx:HBox width="100%" horizontalAlign="center">
+		<mx:Button label="&lt;&lt;" click="Application.application.searchbar.decrementOffset();" />
+		<mx:Button label=">>" click="Application.application.searchbar.incrementOffset();"/>
 	</mx:HBox>
-    <mx:Text id="pageNumber" x="317" y="470"/>
+		
+	<mx:HBox width="100%" horizontalAlign="center">
+		<mx:Label id="pageNumber"/>
+    </mx:HBox>
     
-</mx:Canvas>
+</mx:VBox>

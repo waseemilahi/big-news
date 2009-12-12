@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml">
-	<mx:Text text="{data.Query.SearchTerms}" width="100%" selectable="false" truncateToFit="true" styleName="HistoryQuery"/>
+	<mx:Text text="{data.Query.SearchTerms}" width="100%" height="100%" selectable="false" truncateToFit="true" styleName="HistoryQuery"/>
 </mx:VBox>

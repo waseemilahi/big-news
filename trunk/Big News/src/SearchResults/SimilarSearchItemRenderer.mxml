@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" dataChange="dataChangeHandler(event)"
-	minHeight="120" minWidth="100">
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" dataChange="dataChangeHandler(event)" minHeight="200" minWidth="300">
 
 	<mx:Script>
 		<![CDATA[
@@ -29,10 +28,10 @@
 		]]>
 	</mx:Script>
 
-	<mx:Text text="Search terms: {searchTerms}" selectable="false"
+	<mx:Text text="Search phrase: '{searchTerms}'" selectable="false"
 		truncateToFit="true" width="100%" styleName="ArticleTitle"/>
-	<mx:Text text="Title: {news.Title}" selectable="false"
+	<mx:Text text="{news.Title}" selectable="false"
 		truncateToFit="true" width="100%" styleName="ArticleTitle"/>
-	<mx:TextArea text="Snippet: {news.Snippet}" selectable="false"
+	<mx:TextArea text="{news.Snippet}" selectable="false"
 		editable="false" width="100%" height="100%" styleName="ArticleSnippet"/>
 </mx:VBox>

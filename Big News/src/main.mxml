@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" xmlns:local="*" height="100%" width="100%" applicationComplete="appLoaded()">
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" xmlns:local="*" height="100%" width="100%" applicationComplete="appLoaded()"
+	creationComplete="setProgramStyles()">
 	<mx:Script>
 		<![CDATA[
 			Security.loadPolicyFile("http://api.bing.net/crossdomain.xml");
@@ -7,8 +8,39 @@
 			{
 				trace("app actually loaded");
 			}
+			
+			private function setProgramStyles():void
+			{
+				StyleManager.getStyleDeclaration(".TabNavigation").setStyle("fontSize", 15);
+			}
 		]]>
 	</mx:Script>
+	
+	<mx:Style>
+		.BigNewsHeading {
+			font-weight:bold
+		}
+		.TabNavigation {
+			font-weight:bold
+		}
+		.SearchBarInput {
+		}
+		.SearchResultPageButtons {
+		}
+		.SearchResultPageNumbers {
+		}
+		.SimilarSearchLinkButton {
+		}
+		.ArticleTitle {
+			font-weight:bold
+		}
+		.ArticleSnippet {
+		}
+		.SearchButton {
+		}
+		.HistoryQuery {
+		}
+	</mx:Style>
 	
 	<mx:VBox width="100%" height="100%">
 		<local:SearchBar id="searchbar" height="109" width="100%"/>

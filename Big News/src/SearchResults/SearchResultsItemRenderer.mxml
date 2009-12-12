@@ -102,7 +102,7 @@
 		]]>
 	</mx:Script>
 	
-	<mx:Text text="{data.Title}" selectable="false" width="100%" height="100%" truncateToFit="true"/>
-	<mx:LinkButton id="linkButton" label="{linkButtonLabel}" click="linkButtonClickHandler(event)"/>
-	<mx:TextArea text="{data.Snippet}" selectable="false" editable="false" width="100%" height="100%"/>
+	<mx:Text text="{data.Title}" selectable="false" width="100%" height="100%" truncateToFit="true" styleName="ArticleTitle"/>
+	<mx:LinkButton id="linkButton" label="{linkButtonLabel}" click="linkButtonClickHandler(event)" styleName="SimilarSearchLinkButton"/>
+	<mx:TextArea text="{data.Snippet}" selectable="false" editable="false" width="100%" height="100%" styleName="ArticleSnippet"/>
 </mx:VBox>

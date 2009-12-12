@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="740" height="572">
 
 	<mx:Script>
 		<![CDATA[
@@ -43,7 +43,7 @@
 							history.selectedIndex = 0;
 							var resp:SearchResponse = historyData.getItemAt(0) as SearchResponse;	
 							
-							
+							Application.application.searchbar.runningTotal = event.result.News.Total;
 									
 							list.dataProvider = resp.News.Results;
 							
@@ -90,7 +90,7 @@
 		]]>
 	</mx:Script>
 	
-	<mx:HDividedBox width="100%" height="429">
+	<mx:HDividedBox liveDragging="false" width="100%" height="429">
 		
 	
 	<mx:HBox horizontalAlign="center" >
@@ -104,8 +104,8 @@
     
     <mx:HBox horizontalAlign="center" x="304" y="437" height="25">    
     
-	<mx:Button label="&lt;&lt;" />
-	<mx:Button label=">>" />
+	<mx:Button label="&lt;&lt;" click="Application.application.searchbar.decrementOffset();" />
+	<mx:Button label=">>" click="Application.application.searchbar.incrementOffset();"/>
 	</mx:HBox>
     <mx:Text text="Page 1 0f 1" x="317" y="470"/>
     

@@ -23,6 +23,8 @@
 			
 			public var pageCount:Number = 1;
 				
+			public var pageQuery:String;
+				
 			public var sortOption:NewsSortOption = new NewsSortOption();
 							
 			public var newsRequest:NewsRequest = new NewsRequest();
@@ -78,7 +80,7 @@
 				var request:SearchRequest = new SearchRequest();
 				request.AppId = "8FE9AA6D693C08E68F43A1AF8DECCFB092EA54A3";
 					
-				request.Query = query.text;
+				request.Query = pageQuery;
 										
 				request.Market = "en-us";
 				
@@ -123,6 +125,8 @@
 				request.AppId = "8FE9AA6D693C08E68F43A1AF8DECCFB092EA54A3";
 					
 				request.Query = query.text;
+				
+				pageQuery = new String(query.text);
 										
 				request.Market = "en-us";
 				

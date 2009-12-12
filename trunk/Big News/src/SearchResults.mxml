@@ -72,7 +72,10 @@
 								}
 								else
 								{
-									ArrayCollection(urlHash[nr.Url]).addItem(nr);
+									obj = new Object();
+									obj.parent = resp;
+									obj.newsresult = nr;
+									ArrayCollection(urlHash[nr.Url]).addItem(obj);
 								}
 							}
 						}

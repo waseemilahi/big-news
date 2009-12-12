@@ -11,19 +11,22 @@
 			
 			private function setProgramStyles():void
 			{
-				StyleManager.getStyleDeclaration(".TabNavigation").setStyle("fontSize", 15);
+				StyleManager.getStyleDeclaration(".TabNavigation").getStyle("fontSize");
 			}
 		]]>
 	</mx:Script>
 	
 	<mx:Style>
 		.BigNewsHeading {
-			font-weight:bold
+			font-weight:bold;
+			font-size:20;
 		}
 		.TabNavigation {
-			font-weight:bold
+			font-weight:normal;
+			font-size:12;
 		}
 		.SearchBarInput {
+			font-size:12;
 		}
 		.SearchResultPageButtons {
 		}
@@ -32,13 +35,16 @@
 		.SimilarSearchLinkButton {
 		}
 		.ArticleTitle {
-			font-weight:bold
+			font-weight:bold;
 		}
 		.ArticleSnippet {
+			font-weight:normal;
 		}
 		.SearchButton {
+			font-size:12;
 		}
 		.HistoryQuery {
+			font-size:12;
 		}
 	</mx:Style>
 	

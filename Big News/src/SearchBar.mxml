@@ -171,9 +171,9 @@
     <mx:TabBar id="categoryBar" dataProvider="{buttons}" labelField="name" styleName="TabNavigation" itemClick="setCategory(buttons[categoryBar.selectedIndex].queryString)"/>
 	
 	<mx:HBox width="100%" height="50">
-		<mx:Label text="BigNews" click="goHome();" textAlign="center" styleName="BigNewsHeading"/>
+		<mx:LinkButton label="BigNews" click="goHome();" textAlign="center" styleName="BigNewsHeading"/>
 		<mx:TextInput id="query" editable="true" styleName="SearchBarInput"/>
-		<mx:Button label="Search" click="executeQuery()" styleName="SearchButton"/>
+		<mx:Button id="searchbutton" label="Search" click="executeQuery()" styleName="SearchButton"/>
 	</mx:HBox>
 	
 </mx:VBox>

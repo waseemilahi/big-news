@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" height="100%" width="100%"
+	horizontalScrollPolicy="off"
+	verticalScrollPolicy="off"
+	creationComplete="resizeText(snippet)"
+	headerHeight="5">
+	<mx:Script>
+		<![CDATA[
+			import mx.core.ScrollPolicy;
+			private function resizeText(field:TextArea) :void
+			{
+				if(!initialized) return;
+				var old_height:int = field.height;
+				var ta_height:uint = 15;
+
+				field.validateNow();
+				
+				for(var i:int=0; i < field.mx_internal::getTextField().numLines; i++) {
+					ta_height += field.mx_internal::getTextField().getLineMetrics(i).height;
+				}
+				field.height = ta_height;
+			}
+		]]>
+	</mx:Script>
+	<mx:Label text="{data.Title}" width="100%" styleName="title"/>
+	<mx:TextArea id="snippet" text="{data.Snippet}" horizontalScrollPolicy="off" verticalScrollPolicy="off" editable="false" height="100%" width="100%" textAlign="left" change="resizeText(snippet)" />
+</mx:Panel>

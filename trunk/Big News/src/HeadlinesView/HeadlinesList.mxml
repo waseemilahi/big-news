@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml">
+	<mx:Repeater id="rp" height="100%" width="100%" dataProvider="{this.data}" creationComplete="trace('got hereeeeee')" xmlns:HeadlinesView="HeadlinesView.*">
+		<HeadlinesView:HeadlinesArticle id="article" data="{rp.currentItem}"/>
+	</mx:Repeater>
+</mx:VBox>

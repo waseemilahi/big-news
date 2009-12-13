@@ -1,0 +1,18 @@
+
+global
+{
+	fontSize: 30;
+}
+.Headings
+{
+	fontWeight: bold;
+}
+Label
+{
+	fontSize: 25;
+}
+
+Button
+{
+	
+}

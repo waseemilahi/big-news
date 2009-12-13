@@ -12,185 +12,13 @@
 			import mx.rpc.events.FaultEvent;
 			import mx.core.Application;
 			import PagableArrayCollection.PagableArrayCollection;
+			import SearchLogic.QueryHistory
 			
 			[Bindable]
 			public var pagableData:PagableArrayCollection;
-			
-			[Bindable]
-			private var historyData:ArrayCollection = new ArrayCollection();
-			
+						
 			//Flex calls this a Dictionary, but its commonly known as a Hashmap
-			[Bindable]
-			public var urlHash:Dictionary = new Dictionary();
-			
-			public function showNewResults(e:Event):void
-			{
-				if(e is FaultEvent)
-				{
-					Alert.show("Error While Searching.");
-					return;
-				}
-				else if(e is SearchResultEvent)
-				{
-					var event:SearchResultEvent = e as SearchResultEvent;
-					
-					//change view in main view stack
-					Application.application.resultViewStack.selectedIndex = 1;
-					
-					if (event.result.News != null)
-					{
-						if (event.result.News.Results.length != 0)
-						{	
-							var resp:SearchResponse = event.result as SearchResponse;	
-							
-							Application.application.searchbar.runningTotal = event.result.News.Total;
-							if (searchresultsTN.selectedIndex == 0)
-							{	
-								list.dataProvider = resp.News.Results;
-							} else
-							{
-								datesort.dataProvider = resp.News.Results;
-							}
-							
-							pageNumber.text = "Page " + Application.application.searchbar.pageCount + " of "+ Math.ceil( event.result.News.Total/15);
-							
-							for (var i:int = 0; i < resp.News.Results.length; i++)
-							{
-								var nr:NewsResult = resp.News.Results.getNewsResultAt(i);
-								if (urlHash[nr.Url] == undefined)
-								{
-									urlHash[nr.Url] = new ArrayCollection();
-									//Create a special Object to hold the NewsResult,
-									//but also it's parent, which is a SearchResponse.
-									//This allows the program to use the previous
-									//search results.
-									var obj:Object = new Object();
-									obj.parent = resp;
-									obj.newsresult = nr;
-									ArrayCollection(urlHash[nr.Url]).addItem(obj);
-								}
-								else
-								{
-									obj = new Object();
-									obj.parent = resp;
-									obj.newsresult = nr;
-									ArrayCollection(urlHash[nr.Url]).addItem(obj);
-								}
-							}
-						}
-						else {
-							//Alert.show("The Result Array is Empty!!");
-							pageNumber.text = "Page " + "1" + " of "+ "1";
-						}
 						
-					}
-					else { 
-						Alert.show("Could not find any search results");
-						pageNumber.text = "Page " + "1" + " of "+ "1";
-					}
-				
-				}
-			}
-			
-			public function showResults(e:Event):void
-			{
-				if(e is FaultEvent)
-				{
-					Alert.show("Error While Searching.");
-					return;
-				}
-				else if(e is SearchResultEvent)
-				{
-					var event:SearchResultEvent = e as SearchResultEvent;
-					
-					//change view in main view stack
-					Application.application.resultViewStack.selectedIndex = 1;
-					
-					if (event.result.News != null)
-					{
-						if (event.result.News.Results.length != 0)
-						{	
-							historyData.addItemAt(event.result, 0);
-							history.selectedIndex = 0;
-							var resp:SearchResponse = historyData.getItemAt(0) as SearchResponse;	
-							
-							Application.application.searchbar.runningTotal = event.result.News.Total;
-							if (searchresultsTN.selectedIndex == 0)
-							{	
-								list.dataProvider = resp.News.Results;
-							} else
-							{
-								datesort.dataProvider = resp.News.Results;
-							}
-							
-							pageNumber.text = "Page " + Application.application.searchbar.pageCount + " of "+ Math.ceil( event.result.News.Total/15);
-							
-							for (var i:int = 0; i < resp.News.Results.length; i++)
-							{
-								var nr:NewsResult = resp.News.Results.getNewsResultAt(i);
-								if (urlHash[nr.Url] == undefined)
-								{
-									urlHash[nr.Url] = new ArrayCollection();
-									//Create a special Object to hold the NewsResult,
-									//but also it's parent, which is a SearchResponse.
-									//This allows the program to use the previous
-									//search results.
-									var obj:Object = new Object();
-									obj.parent = resp;
-									obj.newsresult = nr;
-									ArrayCollection(urlHash[nr.Url]).addItem(obj);
-								}
-								else
-								{
-									obj = new Object();
-									obj.parent = resp;
-									obj.newsresult = nr;
-									ArrayCollection(urlHash[nr.Url]).addItem(obj);
-								}
-							}
-						}
-						else {
-							//Alert.show("The Result Array is Empty!!");
-							pageNumber.text = "Page " + "1" + " of "+ "1";
-						}
-						
-					}
-					else { 
-						Alert.show("Could not find any search results");
-						pageNumber.text = "Page " + "1" + " of "+ "1";
-					}
-				
-				}
-			}
-			
-			/**
-			 * Executed when the user clicks on the list of previous searches
-			 */ 
-			public function historyListClick(e:Event):void
-			{
-				var resp:SearchResponse = historyData.getItemAt(history.selectedIndex) as SearchResponse;
-				
-				Application.application.searchbar.pageQuery = resp.Query.SearchTerms ;
-				
-				Application.application.searchbar.query.text = resp.Query.SearchTerms;
-				
-				Application.application.searchbar.newQuery();
-				
-				/*
-				Application.application.searchbar.runningTotal = resp.News.Total;
-				
-				Application.application.searchbar.pageCount = 1;
-				
-				Application.application.searchbar.newsRequest.Offset = 0;
-				*/			
-				if (searchresultsTN.selectedIndex == 0)
-				{	
-					list.dataProvider = resp.News.Results;
-				} else
-				{
-					datesort.dataProvider = resp.News.Results;
-				}
-			}
 		]]>
 	</mx:Script>
 	
@@ -203,34 +31,34 @@
 				<mx:Spacer width="100%"/>
 			</mx:HBox>
 			
-			<mx:TabNavigator id="searchresultsTN" selectedIndex="0" width="100%" height="100%"
-				creationPolicy="all" styleName="TabNavigation">
+			<!--<mx:TabNavigator id="searchresultsTN" selectedIndex="0" width="100%" height="100%"
+				creationPolicy="all" styleName="TabNavigation"> -->
 			
-			<mx:VBox label="Sort by Relevance" width="100%" height="100%">
-				<mx:List id="list" width="100%" itemRenderer="SearchResults.SearchResultsItemRenderer" height="100%"/>
-			</mx:VBox>
+				<mx:VBox label="Sort by Relevance" width="100%" height="100%">
+					<mx:List id="list" width="100%" itemRenderer="SearchResults.SearchResultsItemRenderer" height="100%" dataProvider="{history.selectedItem.results}"/>
+				</mx:VBox>
 			
-			<mx:VBox  label="Sort by Date" width="100%" height="100%">
-				<SearchResults:DateSort id="datesort" width="100%" height="100%"/>
-			</mx:VBox>
+				<!-- <mx:VBox  label="Sort by Date" width="100%" height="100%">
+					<SearchResults:DateSort id="datesort" width="100%" height="100%" dataProvider="{history.selectedItem.results}"/>
+				</mx:VBox>
 			
-			</mx:TabNavigator>
+			</mx:TabNavigator> -->
 		</mx:VBox>
 		<mx:VBox width="20%" height="100%" horizontalAlign="center">
 		<mx:Label text="Previous searches" styleName="CategoryHeading"/>
 		<mx:List id="history" itemRenderer="SearchResults.HistoryItemRenderer"
-			dataProvider="{historyData}" click="historyListClick(event)" width="100%" height="100%"/>
+			dataProvider="{QueryHistory.instance.history}" labelField="query" width="100%" height="100%" selectedIndex="{QueryHistory.instance.currentIndex}"/>
 		</mx:VBox>
 	    
     </mx:HDividedBox>
     
     <mx:HBox width="100%" horizontalAlign="center">
-		<mx:Button label="&lt;&lt;" click="Application.application.searchbar.decrementOffset();" styleName="SearchResultPageButtons"/>
-		<mx:Button label=">>" click="Application.application.searchbar.incrementOffset();" styleName="SearchResultPageButtons"/>
+		<mx:Button label="&lt;&lt;" click="QueryHistory.instance.currentQuery.nextPage();" styleName="SearchResultPageButtons"/>
+		<mx:Button label="&gt;&gt;" click="QueryHistory.instance.currentQuery.prevPage();" styleName="SearchResultPageButtons"/>
 	</mx:HBox>
 		
 	<mx:HBox width="100%" horizontalAlign="center">
-		<mx:Label id="pageNumber" styleName="SearchResultPageNumbers"/>
+		<mx:Label id="pageNumber" styleName="SearchResultPageNumbers" text="Page {history.selectedItem.currentPage + 1} of {history.selectedItem.totalPages}"/>
     </mx:HBox>
     
 </mx:VBox>

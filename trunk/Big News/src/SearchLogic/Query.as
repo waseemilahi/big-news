@@ -41,13 +41,13 @@ package SearchLogic
 		public var results:ArrayCollection = new ArrayCollection();
 		
 		[Bindable]
-		public var ready:Boolean;
+		public var ready:Boolean = true;
 		
 		[Bindable]
 		public var currentPage:Number;
 		
 		[Bindable(event='totalChanged')]
-		public function get pages():Number
+		public function get totalPages():Number
 		{
 			return Math.ceil(total / _resultsPerPage);
 		}
@@ -167,11 +167,21 @@ package SearchLogic
 		private function handleSearch(e:Event):void
 		{
 			var qe:QueryEvent = new QueryEvent(QueryEvent.COMPLETE);
-			if (e is SearchResultEvent && (e as SearchResultEvent).result.News != null)
+			if (e is SearchResultEvent)
 			{
-				qe.query = this;
-				updateSearch((e as SearchResultEvent).result.News)
+				 if((e as SearchResultEvent).result.News != null)
+				 {
+					qe.query = this;
+					updateSearch((e as SearchResultEvent).result.News)
+				 }
+				 else
+				 {
+					qe.query = this;
+					this.total = 0;
+					this.currentPage = -1;
+			     }
 			}
+			
 			ready = true;
 			dispatchEvent(qe);
 		}
@@ -232,9 +242,9 @@ package SearchLogic
 				trace("can't get page, not ready");
 				return;
 			}
-			else if (n < 0 || (n >= pages))
+			else if (n < 0 || (n >= totalPages))
 			{
-				trace("page " + n + " out of bounds (0,"+pages+")");
+				trace("page " + n + " out of bounds (0,"+totalPages+")");
 				return;
 			}
 			else if (n == currentPage)
@@ -242,7 +252,6 @@ package SearchLogic
 				trace("already at page " + n);
 				return;
 			}
-			ready = false;
 			search(this.sortedByRelevance, n*_resultsPerPage);
 			
 			//check cache			
@@ -260,7 +269,6 @@ package SearchLogic
 				trace("already sorted by " + byRelevance ? "relevance." : "date");
 				return; 
 			}
-			ready = false;
 			search(byRelevance);	
 		}		
 	}

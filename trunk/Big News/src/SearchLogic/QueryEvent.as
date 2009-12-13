@@ -18,5 +18,12 @@ package SearchLogic
 		{
 			super(type, bubbles, cancelable);
 		}
+		
+		override public function clone():Event {
+			var qe:QueryEvent = new QueryEvent(this.type);
+			qe.query = query;
+			qe.newQuery = newQuery;
+			return qe;
+		}
 	}
 }

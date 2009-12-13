@@ -4,158 +4,36 @@
 
 	<mx:Script>
 		<![CDATA[
-			import mx.collections.ArrayCollection;
-			import net.bing.NewsSortOption;
-			import net.bing.NewsRequest;
-			import mx.rpc.events.FaultEvent;
-			import net.bing.SearchResultEvent;
-			import mx.rpc.AsyncToken;
-			import net.bing.ArrayOfSourceType;
-			import net.bing.SearchRequest;
-			import net.bing.AdultOption;
-			import net.bing.BingService;
-			import mx.core.Application;
 			import mx.controls.Alert;
-			
-			public var adult:AdultOption = new AdultOption();
-			
-			public var runningTotal:Number = 0;
-			
-			public var pageCount:Number = 1;
-				
-			public var pageQuery:String;
-				
-			public var sortOption:NewsSortOption = new NewsSortOption();
-							
-			public var newsRequest:NewsRequest = new NewsRequest();
-			
-			public function setCategory(category:String):void
-			{
-				if(category.length > 0)
-					newsRequest.Category = "rt_"+ category;
-				else newsRequest.Category = "";
-			}
-			
-			public function incrementOffset():void
-			{
-				if(newsRequest.Offset <= (runningTotal - 15))
-				{
-					newsRequest.Offset +=15;
-					pageCount++;
-					Application.application.searchresults.pageNumber.text = "Page " + pageCount + " of "+ Math.ceil(runningTotal/15);
-					newQuery();
-				}
-				
-			}
-				
-			public function decrementOffset():void
-			{
-				if(newsRequest.Offset >= 15)
-				{
-					newsRequest.Offset -=15;
-					pageCount--;
-					Application.application.searchresults.pageNumber.text = "Page " + pageCount + " of "+ Math.ceil(runningTotal/15);
-					newQuery();
-				}
-			}
-			
-			public function newQuery():void
-			{
-				
-				//if(query.text.length < 1)return;
-				
-				//search logic
-				var bing:BingService = new BingService();
+			import SearchLogic.QueryEvent;
+			import SearchLogic.QueryHistory;
+			import mx.core.Application;
+			import mx.collections.ArrayCollection;
 
-				bing.addEventListener(SearchResultEvent.Search_RESULT, Application.application.searchresults.showNewResults);
-				bing.addEventListener(FaultEvent.FAULT, Application.application.searchresults.showNewResults);
-		
-				adult._AdultOption = "Strict";
-				sortOption._NewsSortOption = "Date";
-				//newsRequest.Category = "rt_Health";
-				//newsRequest.Offset = 0;
-				newsRequest.Count = 15;
-				newsRequest.SortBy = sortOption;
-		
-				var request:SearchRequest = new SearchRequest();
-				request.AppId = "8FE9AA6D693C08E68F43A1AF8DECCFB092EA54A3";
-					
-				request.Query = pageQuery;
-										
-				request.Market = "en-us";
-				
-				request.Adult = adult;
-				
-				request.News = newsRequest;
-				
-				request.Latitude = 40.77;
-				
-				request.Longitude = 73.98;
-				
-				request.Radius = 10000;
-				
-				request.Sources = new ArrayOfSourceType(["News"]);
-				
-				//request.News.Category = "rt_Health";
-				
-				var token:AsyncToken = bing.search(request);
-			}
 						
 			public function executeQuery():void
 			{
-				
-				if(query.text.length < 1)return;
-				
-				pageCount = 1;
-				
-				//search logic
-				var bing:BingService = new BingService();
-
-				bing.addEventListener(SearchResultEvent.Search_RESULT, Application.application.searchresults.showResults);
-				bing.addEventListener(FaultEvent.FAULT, Application.application.searchresults.showResults);
-		
-				adult._AdultOption = "Strict";
-				sortOption._NewsSortOption = "Date";
-				//newsRequest.Category = "rt_Health";
-				newsRequest.Offset = 0;
-				newsRequest.Count = 15;
-				newsRequest.SortBy = sortOption;
-		
-				var request:SearchRequest = new SearchRequest();
-				request.AppId = "8FE9AA6D693C08E68F43A1AF8DECCFB092EA54A3";
-					
-				request.Query = query.text;
-				
-				pageQuery = new String(query.text);
-										
-				request.Market = "en-us";
-				
-				request.Adult = adult;
-				
-				request.News = newsRequest;
-				
-				request.Latitude = 40.77;
-				
-				request.Longitude = 73.98;
-				
-				request.Radius = 10000;
-				
-				request.Sources = new ArrayOfSourceType(["News"]);
-				
-				//request.News.Category = "rt_Health";
-				
-				var token:AsyncToken = bing.search(request);
+				if(query.text.length == 0)
+					return;
+				QueryHistory.instance.addEventListener(QueryEvent.COMPLETE, handleSearchResults);
+				QueryHistory.instance.getQuery(this.query.text, this.categories[categoryBar.selectedIndex].queryString);								
 			}
-			
-			public function goHome():void
+						
+			private function handleSearchResults(event:QueryEvent):void
 			{
-				Application.application.resultViewStack.selectedIndex = 0;
-				Application.application.headlines.appReady();	
-				query.text = "";		
+				if(event.fail)
+					Alert.show("Error processing query, please try again");
+				else
+				{
+					Application.application.openSearchResults();
+					if (event.query.total == 0)
+						Alert.show("No results for that query");
+				} 
+					
 			}
 			
 			[Bindable]
-			public var buttons:ArrayCollection = new ArrayCollection([{name: "All", queryString: ""},
+			public var categories:ArrayCollection = new ArrayCollection([{name: "All", queryString: ""},
 							{name: "Business", queryString: "Business"}, 
 							{name: "Entertainment", queryString: "Entertainment"}, 
 							{name: "Health", queryString: "Health"}, 
@@ -169,15 +47,15 @@
 		]]>
 	</mx:Script>
 	<mx:HBox width="100%">
-		<mx:LinkButton label="BigNews" click="goHome();" textAlign="center" styleName="BigNewsHeading"/>
+		<mx:LinkButton label="BigNews" click="Application.application.openHeadlines();" textAlign="center" styleName="BigNewsHeading"/>
 		<mx:Spacer width="100%"/>
 		<local:StyleSelector/>
 	</mx:HBox>
 	<mx:HBox width="100%" id="hcatbar">
 		<mx:VBox borderStyle="solid" borderThickness="1" paddingBottom="2"
 			horizontalScrollPolicy="off" verticalScrollPolicy="off" horizontalAlign="center">
-		    <mx:TabBar id="categoryBar" dataProvider="{buttons}" labelField="name"
-		    	styleName="TabNavigation" itemClick="setCategory(buttons[categoryBar.selectedIndex].queryString)"/>
+		    <mx:TabBar id="categoryBar" dataProvider="{categories}" labelField="name"
+		    	styleName="TabNavigation"/>
 			
 			<mx:HBox width="100%" horizontalAlign="center">
 				<mx:TextInput id="query" editable="true" styleName="SearchBarInput"/>

@@ -2,6 +2,8 @@
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="appReady()" paddingLeft="2" paddingRight="2" paddingBottom="15" >
 	<mx:Script>
 		<![CDATA[
+			import SearchLogic.Query;
+			import SearchLogic.QueryHistory;
 			import mx.controls.Alert;
 			import net.bing.ArrayOfSourceType;
 			import net.bing.SearchResultEvent;
@@ -15,72 +17,14 @@
 			import net.bing.NewsResult;
 			
 			[Bindable]
-			public var headlines:ArrayCollection //of newsResults
+			public var headlines:Query 
 			
 			public function appReady():void
 			{
-				loadHeadlines();
-			}
-			
-			private function loadHeadlines():void
-			{
-				//search logic
-				var bing:BingService = new BingService();
-
-				bing.addEventListener(SearchResultEvent.Search_RESULT, showHeadlines);
-				bing.addEventListener(FaultEvent.FAULT, showHeadlines);
-	
-				var adult:AdultOption = new AdultOption();
-				adult._AdultOption = "Strict";
-	
-				var request:SearchRequest = new SearchRequest();
-				request.AppId = "8FE9AA6D693C08E68F43A1AF8DECCFB092EA54A3";
-	
-				request.Query = "";
-				
-				request.Market = "en-us";
-				
-				request.Adult = adult;
-				
-				request.Latitude = 40.77;
-				
-				request.Longitude = 73.98;
-				
-				request.Radius = 10000;
-				
-				request.Sources = new ArrayOfSourceType(["News"]);
-				
-				var token:AsyncToken = bing.search(request);
-			}
-			
-			private function showHeadlines(e:Event):void
-			{
-				if(e is FaultEvent)
-				{
-					//Alert.show("Error While Searching.");
-					return;
-				}
-				else if(e is SearchResultEvent)
-				{
-					var event:SearchResultEvent = e as SearchResultEvent;
-					if (event.result.News != null)
-					{
-						if (event.result.News.Results.length != 0)
-						{
-							headlinesView.dataProvider = event.result.News.Results;					
-						}
-						else {
-							//Alert.show("The Result Array is Empty!!");
-							return;
-						}
-					
-					}
-					else { 
-						//Alert.show("Search object is NULL!!");
-						return;
-					}
-				
-				} 
+				headlines = new Query();
+				headlines.query = "";
+				headlines.category = "";
+				headlines.search();				
 			}
 			
 		]]>
@@ -91,5 +35,5 @@
 		<mx:Label text="Top Headlines" styleName="CategoryHeading"/>
 		<mx:Spacer width="100%"/>
 	</mx:HBox>
-	<mx:TileList id="headlinesView" styleName="HeadlineList" itemRenderer="TileNewsView.TileArticleRenderer" width="100%" height="100%"/>
+	<mx:TileList id="headlinesView" styleName="HeadlineList" itemRenderer="TileNewsView.TileArticleRenderer" width="100%" height="100%" dataProvider="{headlines.results}"/>
 </mx:VBox>

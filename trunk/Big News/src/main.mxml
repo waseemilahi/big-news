@@ -31,7 +31,7 @@
 			
 			private function doSetProgramStyles(fontOffset:int):void
 			{
-				StyleManager.getStyleDeclaration(".BigNewsHeading")
+				//StyleManager.getStyleDeclaration(".BigNewsHeading")
 			}
 		]]>
 	</mx:Script>

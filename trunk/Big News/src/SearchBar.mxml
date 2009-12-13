@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="800">
-
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%"
+	verticalScrollPolicy="off" creationComplete="init()" paddingBottom="2" paddingLeft="2" paddingRight="2" paddingTop="2" xmlns:local="*">
 
 	<mx:Script>
 		<![CDATA[
@@ -168,12 +168,23 @@
 							{name: "IT", queryString: "ScienceAndTechnology"}]);
 		]]>
 	</mx:Script>
-    <mx:TabBar id="categoryBar" dataProvider="{buttons}" labelField="name" styleName="TabNavigation" itemClick="setCategory(buttons[categoryBar.selectedIndex].queryString)"/>
-	
-	<mx:HBox width="100%" height="50">
+	<mx:HBox width="100%">
 		<mx:LinkButton label="BigNews" click="goHome();" textAlign="center" styleName="BigNewsHeading"/>
-		<mx:TextInput id="query" editable="true" styleName="SearchBarInput"/>
-		<mx:Button id="searchbutton" label="Search" click="executeQuery()" styleName="SearchButton"/>
+		<mx:Spacer width="100%"/>
+		<local:StyleSelector/>
+	</mx:HBox>
+	<mx:HBox width="100%" id="hcatbar">
+		<mx:VBox borderStyle="solid" borderThickness="1"  paddingBottom="2" paddingLeft="2" paddingRight="2" paddingTop="2"
+			horizontalScrollPolicy="off" verticalScrollPolicy="off" horizontalAlign="center">
+		    <mx:TabBar id="categoryBar" dataProvider="{buttons}" labelField="name"
+		    	styleName="TabNavigation" itemClick="setCategory(buttons[categoryBar.selectedIndex].queryString)"/>
+			
+			<mx:HBox width="100%" horizontalAlign="center">
+				<mx:TextInput id="query" editable="true" styleName="SearchBarInput"/>
+				<mx:Button id="searchbutton" label="Search" click="executeQuery()" styleName="SearchButton"/>
+			</mx:HBox>
+		</mx:VBox>
+		<mx:Spacer width="100%"/>
 	</mx:HBox>
 	
 </mx:VBox>

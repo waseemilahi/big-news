@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml">
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" paddingLeft="3" paddingRight="3" horizontalAlign="center">
 	<mx:Text selectable="false" text="Adjust Font Size" styleName="SliderText"/>
 	<mx:HSlider id="hslider" maximum="10" minimum="-5" snapInterval="1" tickInterval="1"
 		liveDragging="true" change="changeHandler(event)" creationComplete="init()" showDataTip="true"/>

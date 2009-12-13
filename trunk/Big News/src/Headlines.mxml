@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="appReady()">
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="appReady()" paddingLeft="2" paddingRight="2"
+		paddingBottom="2">
 	<mx:Script>
 		<![CDATA[
 			import mx.controls.Alert;
@@ -95,5 +96,10 @@
 		]]>
 	</mx:Script>
 	
-	<mx:TileList id="headlinesView" itemRenderer="TileNewsView.TileArticleRenderer" width="100%" height="100%"/>
-</mx:HBox>
+	<mx:HBox width="100%">
+		<mx:Spacer width="100%"/>
+		<mx:Label width="100%" text="Top Headlines" styleName="CategoryHeading"/>
+		<mx:Spacer width="100%"/>
+	</mx:HBox>
+	<mx:TileList id="headlinesView" styleName="HeadlineList" itemRenderer="TileNewsView.TileArticleRenderer" width="100%" height="100%"/>
+</mx:VBox>

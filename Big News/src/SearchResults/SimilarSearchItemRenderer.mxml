@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" dataChange="dataChangeHandler(event)" minHeight="200" minWidth="300">
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" dataChange="dataChangeHandler(event)" minHeight="200" minWidth="300"
+	doubleClickEnabled="true" doubleClick="doubleClickHandler(event)">
 
 	<mx:Script>
 		<![CDATA[
@@ -24,6 +25,12 @@
 					var sr:SearchResponse = data.parent as SearchResponse;
 					searchTerms = sr.Query.SearchTerms;
 				}
+			}
+			
+			private function doubleClickHandler(event:MouseEvent):void
+			{
+				var urlRequest:URLRequest = new URLRequest(news.Url);
+                navigateToURL(urlRequest, "_blank");
 			}
 		]]>
 	</mx:Script>

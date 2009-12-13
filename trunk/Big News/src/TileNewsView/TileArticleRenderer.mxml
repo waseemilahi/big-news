@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" minWidth="300" minHeight="200">
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" minWidth="300" minHeight="200"
+	doubleClickEnabled="true" doubleClick="doubleClickHandler(event)">
+	<mx:Script>
+		<![CDATA[
+			private function doubleClickHandler(event:MouseEvent):void
+			{
+				var urlRequest:URLRequest = new URLRequest(event.currentTarget.data.Url);
+                navigateToURL(urlRequest, "_blank");
+			}
+		]]>
+	</mx:Script>
 	<mx:Text id="title" text="{data.Title}" selectable="false" styleName="ArticleTitle" width="100%"/>
 	<mx:TextArea id="snippet" text="{data.Snippet}" editable="false" selectable="false" styleName="ArticleSnippet" width="100%" height="100%"/>
 </mx:VBox>

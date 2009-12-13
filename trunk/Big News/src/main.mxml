@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" pageTitle="Big News" 
-	styleName="Application" layout="absolute" xmlns:local="*" height="100%" width="100%">
+	styleName="Application" layout="absolute" xmlns:local="*" height="100%" width="100%" autoLayout="true">
 	<mx:Script>
 		<![CDATA[
 			import mx.core.IFlexDisplayObject;
@@ -14,6 +14,8 @@
 				//note that the smallest possible value is -5.  Do not change the font sizes below without
 				//also changing the minimum value, as defined in StyleSelector, specifically the property
 				//minimum
+				StyleManager.getStyleDeclaration(".CategoryHeading").setStyle("fontSize", 
+					int(StyleManager.getStyleDeclaration(".CategoryHeading").getStyle("fontSize")) + amt);
 				StyleManager.getStyleDeclaration(".BigNewsHeading").setStyle("fontSize", 
 					int(StyleManager.getStyleDeclaration(".BigNewsHeading").getStyle("fontSize")) + amt);
 				StyleManager.getStyleDeclaration(".TabNavigation").setStyle("fontSize", 
@@ -42,74 +44,80 @@
 	
 	<mx:Style>
 		.Application {
-			background-color:#CCE5E5;
+			background-color:#BFBFBF;
 		}
 		.HeadlineList {
-			background-color:#CCE5E5;
+			background-color:#E6E6E6;
 		}
 		.CategoryHeading {
 			font-size:14;
+			font-family:Arial;
 			font-weight:bold;
 		}
 		.BigNewsHeading {
 			font-size:34;
+			font-family:Arial;
 			font-weight:bold;
 		}
 		.TabNavigation {
 			font-size:12;
+			font-family:Arial;
 			font-weight:normal;
 			background-color:#79B9B9;
 		}
 		.SearchBarInput {
 			font-size:12;
+			font-family:Arial;
 			font-weight:normal;
 		}
 		.SearchResultPageButtons {
 			font-size:12;
+			font-family:Arial;
 			font-weight:bold;
 		}
 		.SearchResultPageNumbers {
 			font-size:10;
+			font-family:Arial;
 			font-weight:normal;
 		}
 		.SimilarSearchLinkButton {
 			font-size:10;
+			font-family:Arial;
 			font-weight:normal;
 		}
 		.ArticleTitle {
 			font-size:14;
+			font-family:Arial;
 			font-weight:bold;
 		}
 		.ArticleSnippet {
 			font-size:12;
+			font-family:Arial;
 			font-weight:normal;
+			background-color:#B3FFEC;
 		}
 		.SearchButton {
 			font-size:12;
+			font-family:Arial;
 			font-weight:bold;
 		}
 		.HistoryQuery {
 			font-size:12;
+			font-family:Arial;
 			font-weight:normal;
 		}
 		.SliderText {
 			font-size:10;
+			font-family:Arial;
 			font-weight:normal;
 		}
 	</mx:Style>
 	
 	<mx:VBox width="100%" height="100%">
 		<local:SearchBar id="searchbar" width="100%"/>
-		<mx:ViewStack id="resultViewStack" width="100%" height="100%" selectedIndex="0"
-			creationPolicy="all">
-			
-			<local:Headlines id="headlines" height="100%" width="100%">
-				
-			</local:Headlines>
-		
-			<local:SearchResults id="searchresults" height="100%" width="100%">
-				
-			</local:SearchResults>
+		<mx:ViewStack id="resultViewStack" width="100%" height="100%" selectedIndex="0" creationPolicy="all">
+			<local:Headlines id="headlines" height="100%" width="100%"/>
+			<local:SearchResults id="searchresults" height="100%" width="100%"/>
 		</mx:ViewStack>
 	
 	</mx:VBox>

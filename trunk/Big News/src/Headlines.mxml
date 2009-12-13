@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="appReady()" paddingLeft="2" paddingRight="2"
-		paddingBottom="2">
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="appReady()" paddingLeft="2" paddingRight="2" paddingBottom="15" >
 	<mx:Script>
 		<![CDATA[
 			import mx.controls.Alert;
@@ -20,7 +19,6 @@
 			
 			public function appReady():void
 			{
-				this.addEventListener(ResizeEvent.RESIZE, resizeHeadlines);
 				loadHeadlines();
 			}
 			
@@ -53,20 +51,14 @@
 				request.Sources = new ArrayOfSourceType(["News"]);
 				
 				var token:AsyncToken = bing.search(request);
-				
-				//attach event listener, make results feed into showHeadlines
-				
-				//below is a fixture in the mean time...
-				
-				
-			
 			}
 			
 			private function showHeadlines(e:Event):void
 			{
 				if(e is FaultEvent)
 				{
-					Alert.show("Error While Searching.");
+					//Alert.show("Error While Searching.");
+					return;
 				}
 				else if(e is SearchResultEvent)
 				{
@@ -78,27 +70,24 @@
 							headlinesView.dataProvider = event.result.News.Results;					
 						}
 						else {
-							Alert.show("The Result Array is Empty!!");
+							//Alert.show("The Result Array is Empty!!");
+							return;
 						}
 					
 					}
 					else { 
-						Alert.show("Search object is NULL!!");
+						//Alert.show("Search object is NULL!!");
+						return;
 					}
 				
 				} 
 			}
-			
-			private function resizeHeadlines(event:Event):void
-			{
-				
-			}
 		]]>
 	</mx:Script>
 	
-	<mx:HBox width="100%">
+	<mx:HBox width="100%" horizontalAlign="center">
 		<mx:Spacer width="100%"/>
-		<mx:Label width="100%" text="Top Headlines" styleName="CategoryHeading"/>
+		<mx:Label text="Top Headlines" styleName="CategoryHeading"/>
 		<mx:Spacer width="100%"/>
 	</mx:HBox>
 	<mx:TileList id="headlinesView" styleName="HeadlineList" itemRenderer="TileNewsView.TileArticleRenderer" width="100%" height="100%"/>

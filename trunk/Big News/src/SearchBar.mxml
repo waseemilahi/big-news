@@ -174,7 +174,7 @@
 		<local:StyleSelector/>
 	</mx:HBox>
 	<mx:HBox width="100%" id="hcatbar">
-		<mx:VBox borderStyle="solid" borderThickness="1"  paddingBottom="2" paddingLeft="2" paddingRight="2" paddingTop="2"
+		<mx:VBox borderStyle="solid" borderThickness="1" paddingBottom="2"
 			horizontalScrollPolicy="off" verticalScrollPolicy="off" horizontalAlign="center">
 		    <mx:TabBar id="categoryBar" dataProvider="{buttons}" labelField="name"
 		    	styleName="TabNavigation" itemClick="setCategory(buttons[categoryBar.selectedIndex].queryString)"/>

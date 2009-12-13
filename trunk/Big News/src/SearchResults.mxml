@@ -168,7 +168,21 @@
 			 */ 
 			public function historyListClick(e:Event):void
 			{
-				var resp:SearchResponse = historyData.getItemAt(history.selectedIndex) as SearchResponse;			
+				var resp:SearchResponse = historyData.getItemAt(history.selectedIndex) as SearchResponse;
+				
+				Application.application.searchbar.pageQuery = resp.Query.SearchTerms ;
+				
+				Application.application.searchbar.query.text = resp.Query.SearchTerms;
+				
+				Application.application.searchbar.newQuery();
+				
+				/*
+				Application.application.searchbar.runningTotal = resp.News.Total;
+				
+				Application.application.searchbar.pageCount = 1;
+				
+				Application.application.searchbar.newsRequest.Offset = 0;
+				*/			
 				if (searchresultsTN.selectedIndex == 0)
 				{	
 					list.dataProvider = resp.News.Results;

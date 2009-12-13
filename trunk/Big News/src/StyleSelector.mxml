@@ -1,4 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml">
-	
+	<mx:Text selectable="false" text="Adjust Font Size" styleName="SliderText"/>
+	<mx:HSlider id="hslider" maximum="10" minimum="-5" snapInterval="1" tickInterval="1"
+		liveDragging="true" change="changeHandler(event)" creationComplete="init()" showDataTip="true"/>
+		
+	<mx:Script>
+		<![CDATA[
+			import mx.controls.sliderClasses.Slider;
+			import mx.core.Application;
+			import mx.events.SliderEvent;
+			
+			private var lastposition:int;
+			
+			private function init():void
+			{
+				hslider.setThumbValueAt(0, 0);
+				lastposition = 0;
+			}
+			
+			private function changeHandler(event:SliderEvent):void
+			{
+				var currentSlider:Slider = Slider(event.currentTarget);
+                var increment:int = int(currentSlider.value);
+				Application.application.changeFontSize(increment - lastposition);
+				lastposition = increment;
+			}
+		]]>
+	</mx:Script>
 </mx:VBox>

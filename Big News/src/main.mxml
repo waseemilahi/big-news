@@ -4,6 +4,7 @@
 	initialize="init()">
 	<mx:Script>
 		<![CDATA[
+			import SearchLogic.QueryHistory;
 			import mx.managers.BrowserManager;
 			import mx.managers.IBrowserManager;
 			import mx.core.IFlexDisplayObject;
@@ -12,8 +13,23 @@
 			import mx.events.CloseEvent;
 			Security.loadPolicyFile("http://api.bing.net/crossdomain.xml");
 			
+			public function openHeadlines():void
+			{
+				this.searchbar.query.text = "";
+				this.searchbar.categoryBar.selectedIndex = 0;		
+				if(resultViewStack.selectedIndex != 0);
+					resultViewStack.selectedIndex = 0;
+			}
+			
+			public function openSearchResults():void
+			{
+				if(resultViewStack.selectedIndex != 1)
+					resultViewStack.selectedIndex = 1;
+			}
+			
 			private function init():void
 			{
+				QueryHistory.instance;
 				var bm:IBrowserManager = BrowserManager.getInstance();
             	bm.init("", "Big News");
 			}

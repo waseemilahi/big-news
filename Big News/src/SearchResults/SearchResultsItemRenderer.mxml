@@ -4,6 +4,8 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import SearchLogic.Query;
+			import SearchLogic.QueryHistory;
 			import mx.controls.Alert;
 			import mx.controls.List;
 			import mx.core.IFlexDisplayObject;
@@ -24,32 +26,36 @@
 		
 			private function dataChangeHandler(event:Event):void
 			{
-				var dict:Dictionary = Application.application.searchresults.urlHash;
+				if(data == null)
+					return;
+				var dict:Dictionary = Query.urlHash;
 				if (dict[data.Url] != undefined)
 				{
 					relatedSearches = dict[data.Url];
-					
+					trace(relatedSearches);
 					//TODO: Some tweaks need to be made here so that the LinkButton
 					//is not enabled when the only match is from the search itself,
 					//since every search is also in the Hash, thus every item will
 					//have a similar search, itself, which is confusing to the user.
 					if (relatedSearches.length > 1)
 					{
+						linkButton.visible = true;
 						linkButton.enabled = true;
-						linkButtonLabel = relatedSearches.length +" other matches found";
-					} else if (relatedSearches.length == 1)
-					{
-						linkButton.enabled = true;
-						linkButtonLabel = "1 other match found";
+						var labelText:String = relatedSearches.length + " other ";
+						labelText += relatedSearches.length == 2 ? "match" : "matches";
+						labelText += " found";
+						linkButtonLabel = labelText;
 					}
 					else
 					{
+						linkButton.visible = false;
 						linkButton.enabled = false;
 						linkButtonLabel = "";
 					}
 				}
 				else
 				{
+					linkButton.visible = false;
 					linkButton.enabled = false;
 					linkButtonLabel = "";
 				}
@@ -95,6 +101,5 @@
 	
 	<mx:Text text="{data.Title}" selectable="false" width="100%" truncateToFit="true" styleName="ArticleTitle"/>
 	<mx:LinkButton id="linkButton" label="{linkButtonLabel}" click="linkButtonClickHandler(event)" styleName="SimilarSearchLinkButton"/>
-	<mx:Spacer height="100%"/>
-	<mx:TextArea text="{data.Snippet}" selectable="false" editable="false" width="100%" styleName="ArticleSnippet"/>
+	<mx:TextArea text="{data.Snippet}" selectable="false" editable="false" width="100%" height="100%" styleName="ArticleSnippet"/>
 </mx:VBox>

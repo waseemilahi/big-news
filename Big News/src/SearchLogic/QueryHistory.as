@@ -1,5 +1,6 @@
 package SearchLogic
 {
+	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.utils.Dictionary;
 	
@@ -7,8 +8,6 @@ package SearchLogic
 	
 	public class QueryHistory extends EventDispatcher
 	{
-		[Bindable]
-		public var urlHash:Dictionary = new Dictionary();
 		
 		public var queryHash:Dictionary = new Dictionary();
 		
@@ -17,6 +16,29 @@ package SearchLogic
 		
 		[Bindable]
 		public var ready:Boolean = true;
+
+		private var _index:Number;
+		
+		[Bindable(event='indexChanged')]
+		public function get currentIndex():Number
+		{
+			return _index
+		}
+		public function set currentIndex(newIndex:Number):void
+		{
+			_index = newIndex;
+			dispatchEvent(new Event("indexChanged"));	
+		}
+		
+		[Bindable(event='indexChanged')]
+		public function get currentQuery():Query
+		{
+			if(isNaN(currentIndex))
+				return null;
+			else
+				return history[currentIndex];
+				
+		}
 
 		private static var _instance:QueryHistory;
 		
@@ -37,13 +59,28 @@ package SearchLogic
 			return _instance;	
 		}
 		
-		private var _newQuery:Boolean // used to dispatch new query events (to add to visual history)
+		
 		public function getQuery(queryStr:String, category:String) :void
 		{
+			if(!ready)
+			{
+				trace("not ready to get a new query");
+				return;
+			}
+			if(queryStr == null)
+			{
+				trace("invalid query string: " + queryStr);
+				return;	
+			}
+			else if (category == null)
+			{
+				trace("category string invalid: " + category);
+				return;
+			}
+			
 			ready = false;
 			var query:Query = getQueryByKey(key(category, queryStr));
-			_newQuery = query == null;
-			if(_newQuery)
+			if(query == null)
 			{
 				query = new Query();
 				query.query = queryStr;
@@ -55,18 +92,22 @@ package SearchLogic
 		
 		private function handleQuery(event:QueryEvent):void
 		{
-			event.newQuery = _newQuery;
 			if(!event.fail)
-			{
+			{ 
 				var q:Query = event.query;
+				q.removeEventListener(QueryEvent.COMPLETE, handleQuery);
 				var index:Number = getIndexByQuery(q);
-				if(isNaN(index)) //new query!
+				if(isNaN(index) && q.query != "") //new query!
 				{
+					event.newQuery = true;
 					history.addItemAt(q, 0);
 					queryHash[key(q.category, q.query)] = history.length;
+					index = 0;
 				}
+				currentIndex = index;
 			}
 			ready = true;
+			
 			dispatchEvent(event);
 		}
 				

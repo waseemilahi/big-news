@@ -4,6 +4,7 @@
 
 	<mx:Script>
 		<![CDATA[
+			import SearchLogic.Query;
 			import net.bing.SearchResponse;
 			import net.bing.NewsResult;
 			
@@ -22,8 +23,8 @@
 				if (data != null)
 				{
 					news = data.newsresult;
-					var sr:SearchResponse = data.parent as SearchResponse;
-					searchTerms = sr.Query.SearchTerms;
+					var q:Query = data.parent as Query;
+					searchTerms = q.query;
 				}
 			}
 			

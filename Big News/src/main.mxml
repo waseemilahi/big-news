@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" xmlns:local="*" height="100%" width="100%" applicationComplete="appLoaded()"
-	creationComplete="setProgramStyles()">
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" xmlns:local="*" height="100%" width="100%" applicationComplete="appLoaded()">
 	<mx:Script>
 		<![CDATA[
 			import mx.core.IFlexDisplayObject;
@@ -10,28 +9,36 @@
 			Security.loadPolicyFile("http://api.bing.net/crossdomain.xml");
 			private function appLoaded():void
 			{
-				trace("app actually loaded");
+				//trace("app actually loaded");
 			}
 			
-			private function setProgramStyles():void
+			public function changeFontSize(amt:int):void
 			{
-				var tw:TitleWindow = TitleWindow(PopUpManager.createPopUp(this, StyleSelector, false));
-				tw.title = "Similar Searches";
-				tw.showCloseButton = true;
-				tw.addEventListener(CloseEvent.CLOSE, removeSimilarSearchPopUp);
-			}
-			
-			/**
-			 * Remove the PopUpWindow when the user clicks the X
-			 */ 
-			private function removeSimilarSearchPopUp(event:CloseEvent):void
-			{
-				PopUpManager.removePopUp(IFlexDisplayObject(event.currentTarget));
-			}
-			
-			private function doSetProgramStyles(fontOffset:int):void
-			{
-				//StyleManager.getStyleDeclaration(".BigNewsHeading")
+				//note that the smallest possible value is -5.  Do not change the font sizes below without
+				//also changing the minimum value, as defined in StyleSelector, specifically the property
+				//minimum
+				StyleManager.getStyleDeclaration(".BigNewsHeading").setStyle("fontSize", 
+					int(StyleManager.getStyleDeclaration(".BigNewsHeading").getStyle("fontSize")) + amt);
+				StyleManager.getStyleDeclaration(".TabNavigation").setStyle("fontSize", 
+					int(StyleManager.getStyleDeclaration(".TabNavigation").getStyle("fontSize")) + amt);
+				StyleManager.getStyleDeclaration(".SearchBarInput").setStyle("fontSize", 
+					int(StyleManager.getStyleDeclaration(".SearchBarInput").getStyle("fontSize")) + amt);
+				StyleManager.getStyleDeclaration(".SearchResultPageButtons").setStyle("fontSize", 
+					int(StyleManager.getStyleDeclaration(".SearchResultPageButtons").getStyle("fontSize")) + amt);
+				StyleManager.getStyleDeclaration(".SearchResultPageNumbers").setStyle("fontSize", 
+					int(StyleManager.getStyleDeclaration(".SearchResultPageNumbers").getStyle("fontSize")) + amt);
+				StyleManager.getStyleDeclaration(".SimilarSearchLinkButton").setStyle("fontSize", 
+					int(StyleManager.getStyleDeclaration(".SimilarSearchLinkButton").getStyle("fontSize")) + amt);
+				StyleManager.getStyleDeclaration(".ArticleTitle").setStyle("fontSize", 
+					int(StyleManager.getStyleDeclaration(".ArticleTitle").getStyle("fontSize")) + amt);
+				StyleManager.getStyleDeclaration(".ArticleSnippet").setStyle("fontSize", 
+					int(StyleManager.getStyleDeclaration(".ArticleSnippet").getStyle("fontSize")) + amt);
+				StyleManager.getStyleDeclaration(".SearchButton").setStyle("fontSize", 
+					int(StyleManager.getStyleDeclaration(".SearchButton").getStyle("fontSize")) + amt);
+				StyleManager.getStyleDeclaration(".HistoryQuery").setStyle("fontSize", 
+					int(StyleManager.getStyleDeclaration(".HistoryQuery").getStyle("fontSize")) + amt);
+				StyleManager.getStyleDeclaration(".SliderText").setStyle("fontSize", 
+					int(StyleManager.getStyleDeclaration(".SliderText").getStyle("fontSize")) + amt);
 			}
 		]]>
 	</mx:Script>
@@ -77,10 +84,16 @@
 			font-size:12;
 			font-weight:normal;
 		}
+		.SliderText {
+			font-size:10;
+			font-weight:normal;
+		}
 	</mx:Style>
 	
 	<mx:VBox width="100%" height="100%">
-		<local:SearchBar id="searchbar" height="109" width="100%"/>
+		<local:SearchBar id="searchbar" width="100%"/>
+		
+		<local:StyleSelector/>
 	
 		<mx:ViewStack id="resultViewStack" width="100%" height="100%" selectedIndex="0"
 			creationPolicy="all">

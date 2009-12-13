@@ -9,7 +9,7 @@
 			Security.loadPolicyFile("http://api.bing.net/crossdomain.xml");
 			private function appLoaded():void
 			{
-				//trace("app actually loaded");
+				
 			}
 			
 			public function changeFontSize(amt:int):void

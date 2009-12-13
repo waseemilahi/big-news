@@ -48,7 +48,6 @@
 							if (searchresultsTN.selectedIndex == 0)
 							{	
 								list.dataProvider = resp.News.Results;
-								trace(resp.News.Results.getItemAt(0).Url);
 							} else
 							{
 								datesort.dataProvider = resp.News.Results;

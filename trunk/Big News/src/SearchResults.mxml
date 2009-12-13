@@ -133,9 +133,11 @@
 			
 			</mx:TabNavigator>
 		</mx:VBox>
-		
+		<mx:VBox width="20%" height="100%" horizontalAlign="center">
+		<mx:Label text="Previous searches" styleName="CategoryHeading"/>
 		<mx:List id="history" itemRenderer="SearchResults.HistoryItemRenderer"
-			dataProvider="{historyData}" click="historyListClick(event)" width="20%" height="100%"/>
+			dataProvider="{historyData}" click="historyListClick(event)" width="100%" height="100%"/>
+		</mx:VBox>
 	    
     </mx:HDividedBox>
     

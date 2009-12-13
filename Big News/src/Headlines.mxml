@@ -19,14 +19,12 @@
 			
 			public function appReady():void
 			{
-				trace("app rready");
 				this.addEventListener(ResizeEvent.RESIZE, resizeHeadlines);
 				loadHeadlines();
 			}
 			
 			private function loadHeadlines():void
 			{
-				trace("loading headlines");
 				//search logic
 				var bing:BingService = new BingService();
 
@@ -65,7 +63,6 @@
 			
 			private function showHeadlines(e:Event):void
 			{
-				trace("showing headlines (results found from query)");
 				if(e is FaultEvent)
 				{
 					Alert.show("Error While Searching.");

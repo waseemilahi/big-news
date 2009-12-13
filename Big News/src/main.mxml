@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" xmlns:local="*" height="100%" width="100%" applicationComplete="appLoaded()">
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" pageTitle="Big News" 
+	styleName="Application" layout="absolute" xmlns:local="*" height="100%" width="100%">
 	<mx:Script>
 		<![CDATA[
 			import mx.core.IFlexDisplayObject;
@@ -7,10 +8,6 @@
 			import mx.managers.PopUpManager;
 			import mx.events.CloseEvent;
 			Security.loadPolicyFile("http://api.bing.net/crossdomain.xml");
-			private function appLoaded():void
-			{
-				
-			}
 			
 			public function changeFontSize(amt:int):void
 			{
@@ -44,13 +41,24 @@
 	</mx:Script>
 	
 	<mx:Style>
+		.Application {
+			background-color:#CCE5E5;
+		}
+		.HeadlineList {
+			background-color:#CCE5E5;
+		}
+		.CategoryHeading {
+			font-size:14;
+			font-weight:bold;
+		}
 		.BigNewsHeading {
-			font-size:20;
+			font-size:34;
 			font-weight:bold;
 		}
 		.TabNavigation {
 			font-size:12;
 			font-weight:normal;
+			background-color:#79B9B9;
 		}
 		.SearchBarInput {
 			font-size:12;
@@ -92,9 +100,6 @@
 	
 	<mx:VBox width="100%" height="100%">
 		<local:SearchBar id="searchbar" width="100%"/>
-		
-		<local:StyleSelector/>
-	
 		<mx:ViewStack id="resultViewStack" width="100%" height="100%" selectedIndex="0"
 			creationPolicy="all">
 			

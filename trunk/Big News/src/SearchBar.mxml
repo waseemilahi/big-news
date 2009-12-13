@@ -67,8 +67,8 @@
 				//search logic
 				var bing:BingService = new BingService();
 
-				bing.addEventListener(SearchResultEvent.Search_RESULT, Application.application.searchresults.showResults);
-				bing.addEventListener(FaultEvent.FAULT, Application.application.searchresults.showResults);
+				bing.addEventListener(SearchResultEvent.Search_RESULT, Application.application.searchresults.showNewResults);
+				bing.addEventListener(FaultEvent.FAULT, Application.application.searchresults.showNewResults);
 		
 				adult._AdultOption = "Strict";
 				sortOption._NewsSortOption = "Date";

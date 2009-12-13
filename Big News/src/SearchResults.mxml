@@ -23,6 +23,75 @@
 			[Bindable]
 			public var urlHash:Dictionary = new Dictionary();
 			
+			public function showNewResults(e:Event):void
+			{
+				if(e is FaultEvent)
+				{
+					Alert.show("Error While Searching.");
+					return;
+				}
+				else if(e is SearchResultEvent)
+				{
+					var event:SearchResultEvent = e as SearchResultEvent;
+					
+					//change view in main view stack
+					Application.application.resultViewStack.selectedIndex = 1;
+					
+					if (event.result.News != null)
+					{
+						if (event.result.News.Results.length != 0)
+						{	
+							var resp:SearchResponse = event.result as SearchResponse;	
+							
+							Application.application.searchbar.runningTotal = event.result.News.Total;
+							if (searchresultsTN.selectedIndex == 0)
+							{	
+								list.dataProvider = resp.News.Results;
+							} else
+							{
+								datesort.dataProvider = resp.News.Results;
+							}
+							
+							pageNumber.text = "Page " + Application.application.searchbar.pageCount + " of "+ Math.ceil( event.result.News.Total/15);
+							
+							for (var i:int = 0; i < resp.News.Results.length; i++)
+							{
+								var nr:NewsResult = resp.News.Results.getNewsResultAt(i);
+								if (urlHash[nr.Url] == undefined)
+								{
+									urlHash[nr.Url] = new ArrayCollection();
+									//Create a special Object to hold the NewsResult,
+									//but also it's parent, which is a SearchResponse.
+									//This allows the program to use the previous
+									//search results.
+									var obj:Object = new Object();
+									obj.parent = resp;
+									obj.newsresult = nr;
+									ArrayCollection(urlHash[nr.Url]).addItem(obj);
+								}
+								else
+								{
+									obj = new Object();
+									obj.parent = resp;
+									obj.newsresult = nr;
+									ArrayCollection(urlHash[nr.Url]).addItem(obj);
+								}
+							}
+						}
+						else {
+							//Alert.show("The Result Array is Empty!!");
+							pageNumber.text = "Page " + "1" + " of "+ "1";
+						}
+						
+					}
+					else { 
+						Alert.show("Could not find any search results");
+						pageNumber.text = "Page " + "1" + " of "+ "1";
+					}
+				
+				}
+			}
+			
 			public function showResults(e:Event):void
 			{
 				if(e is FaultEvent)

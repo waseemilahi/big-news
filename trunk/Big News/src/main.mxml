@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" pageTitle="Big News" 
-	styleName="Application" layout="absolute" xmlns:local="*" height="100%" width="100%" autoLayout="true">
+	styleName="Application" layout="absolute" xmlns:local="*" height="100%" width="100%" autoLayout="true"
+	initialize="init()">
 	<mx:Script>
 		<![CDATA[
+			import mx.managers.BrowserManager;
+			import mx.managers.IBrowserManager;
 			import mx.core.IFlexDisplayObject;
 			import mx.containers.TitleWindow;
 			import mx.managers.PopUpManager;
 			import mx.events.CloseEvent;
 			Security.loadPolicyFile("http://api.bing.net/crossdomain.xml");
+			
+			private function init():void
+			{
+				var bm:IBrowserManager = BrowserManager.getInstance();
+            	bm.init("", "Big News");
+			}
 			
 			public function changeFontSize(amt:int):void
 			{

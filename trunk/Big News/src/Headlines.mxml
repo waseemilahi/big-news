@@ -27,6 +27,16 @@
 				headlines.search();				
 			}
 			
+			private function enterHandler(event:KeyboardEvent):void
+			{
+				if(event.keyCode == Keyboard.ENTER)
+				{
+					var urlRequest:URLRequest = new URLRequest(headlinesView.selectedItem.Url);
+    	            navigateToURL(urlRequest, "_blank");
+
+				}
+			}
+			
 		]]>
 	</mx:Script>
 	
@@ -35,5 +45,5 @@
 		<mx:Label text="Top Headlines" styleName="CategoryHeading"/>
 		<mx:Spacer width="100%"/>
 	</mx:HBox>
-	<mx:TileList id="headlinesView" styleName="HeadlineList" itemRenderer="TileNewsView.TileArticleRenderer" width="100%" height="100%" dataProvider="{headlines.results}"/>
+	<mx:TileList id="headlinesView" styleName="HeadlineList" itemRenderer="TileNewsView.TileArticleRenderer" width="100%" height="100%" dataProvider="{headlines.results}" keyDown="{enterHandler(event)}"/>
 </mx:VBox>

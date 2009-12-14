@@ -53,12 +53,12 @@
     </mx:HDividedBox>
     
     <mx:HBox width="100%" horizontalAlign="center">
-		<mx:Button label="&lt;&lt;" click="QueryHistory.instance.currentQuery.nextPage();" styleName="SearchResultPageButtons"/>
-		<mx:Button label="&gt;&gt;" click="QueryHistory.instance.currentQuery.prevPage();" styleName="SearchResultPageButtons"/>
+		<mx:Button label="&lt;&lt;" click="QueryHistory.instance.currentQuery.prevPage();" styleName="SearchResultPageButtons" enabled="{QueryHistory.instance.currentQuery.canGetPrevPage()}"/>
+		<mx:Button label="&gt;&gt;" click="QueryHistory.instance.currentQuery.nextPage();" styleName="SearchResultPageButtons" enabled="{QueryHistory.instance.currentQuery.canGetNextPage()}"/>
 	</mx:HBox>
 		
 	<mx:HBox width="100%" horizontalAlign="center">
-		<mx:Label id="pageNumber" styleName="SearchResultPageNumbers" text="Page {history.selectedItem.currentPage + 1} of {history.selectedItem.totalPages}"/>
+		<mx:Label id="pageNumber" styleName="SearchResultPageNumbers" text="Page {history.selectedItem.currentPage+1} of {history.selectedItem.totalPages}"/>
     </mx:HBox>
     
 </mx:VBox>

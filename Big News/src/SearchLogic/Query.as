@@ -87,11 +87,11 @@ package SearchLogic
 		}
 		public function set currentPage(page:Number):void
 		{
-			trace("changing page  from ", _currentPage, "  to ", page);
+//			trace("changing page  from ", _currentPage, "  to ", page);
 			
 			if(_currentPage != page)
 			{
-				trace("changing page");
+//				trace("changing page");
 				_currentPage = page
 				dispatchEvent(new Event('pageChanged'));
 			}
@@ -169,7 +169,7 @@ package SearchLogic
 		
 		public function search(sortByRelevance:Boolean = true, offset:Number = 0):void
 		{
-			trace("searching");
+//			trace("searching");
 			if(!ready)
 			{
 				trace("can't search, not ready");
@@ -216,7 +216,7 @@ package SearchLogic
 		
 		private function handleSearch(e:Event):void
 		{
-			trace("got search back");
+//			trace("got search back");
 			var qe:QueryEvent = new QueryEvent(QueryEvent.COMPLETE);
 			if (e is SearchResultEvent)
 			{

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" pageTitle="Big News" 
 	styleName="Application" layout="absolute" xmlns:local="*" height="100%" width="100%" autoLayout="true"
-	initialize="init()">
+	initialize="init()"
+	 applicationComplete="complete()">
 	
 	
 	<mx:Script>
@@ -15,7 +16,7 @@
 			import mx.managers.PopUpManager;
 			import mx.events.CloseEvent;
 			Security.loadPolicyFile("http://api.bing.net/crossdomain.xml");
-			
+						
 			public function openHeadlines():void
 			{
 				this.searchbar.query.text = "";
@@ -35,6 +36,40 @@
 				QueryHistory.instance;
 				var bm:IBrowserManager = BrowserManager.getInstance();
             	bm.init("", "Big News");
+			}
+			
+			private function complete():void
+			{
+				stage.addEventListener(KeyboardEvent.KEY_DOWN, handleKey);	
+			}
+			
+			public function handleKey(event:KeyboardEvent):void
+			{
+				//focus on categories
+				//ctrl-d
+				if(event.ctrlKey)
+				{
+					var c:Keyboard;
+					switch(event.keyCode)
+					{
+						case 68: 
+							searchbar.categoryBar.setFocus();
+						break;
+						case 76:
+							searchbar.query.setFocus();
+						default:
+					}
+				}
+				//focus on search bar
+				//focus on headlines / search results
+				//focus on history
+				//next page
+				//previous page
+				//zoom in
+				//zoom out
+				//go to headlines
+				//go to search results
+
 			}
 			
 			public function changeFontSize(amt:int):void

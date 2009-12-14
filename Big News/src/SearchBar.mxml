@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%"
-	verticalScrollPolicy="off" creationComplete="init()" paddingBottom="2" paddingLeft="2" paddingRight="2" paddingTop="2" xmlns:local="*" xmlns:flexgif="org.bytearray.gif.flexgif.*">
+	verticalScrollPolicy="off" creationComplete="init()" paddingBottom="2" paddingLeft="2" paddingRight="2" paddingTop="2" xmlns:local="*" xmlns:flexgif="org.bytearray.gif.flexgif.*" xmlns:keyboard="keyboard.*">
 
 	<mx:Script>
 		<![CDATA[
@@ -67,12 +67,12 @@
 		<mx:Spacer width="100%"/>
 	</mx:HBox>
 	<mx:VBox width="100%">
-		<mx:TabBar id="categoryBar" dataProvider="{categories}" labelField="name"
+		<keyboard:KeyboardTabBar id="categoryBar" dataProvider="{categories}" labelField="name"
 		   	styleName="TabNavigation" width="100%"/>						
 		<mx:HBox width="100%" id="hcatbar">
 			<mx:VBox>
 				<mx:LinkButton label="BigNews" click="Application.application.openHeadlines();" textAlign="center" styleName="BigNewsHeading" enabled="{Application.application.resultViewStack.selectedIndex != 0}" toolTip="back to headlines"/>
-			<local:StyleSelector/>	
+			<!--<local:StyleSelector/> -->	
 			</mx:VBox>
 			<mx:Spacer width="100%"/>
 			<mx:HBox width="100%" horizontalAlign="center">

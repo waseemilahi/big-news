@@ -28,6 +28,8 @@ package SearchLogic
 		private var _dateCache:ArrayCollection = new ArrayCollection();
 		private var _dateTotal:Number;	
 		
+		private var _nextSortByRelevance:Boolean;
+		
 		[Bindable]
 		public static var urlHash:Dictionary = new Dictionary();
 		
@@ -43,8 +45,20 @@ package SearchLogic
 		[Bindable]
 		public var ready:Boolean = true;
 		
-		[Bindable]
-		public var currentPage:Number;
+		private var _currentPage:Number;
+		[Bindable(event='pageChanged')]
+		public function get currentPage():Number
+		{
+			return _currentPage;
+		}
+		public function set currentPage(page:Number):void
+		{
+			if(_currentPage != page)
+			{
+				_currentPage = page
+				dispatchEvent(new Event('pageChanged'));
+			}
+		}
 		
 		[Bindable(event='totalChanged')]
 		public function get totalPages():Number
@@ -124,9 +138,8 @@ package SearchLogic
 				return;
 			}
 			ready = false;
-			
+			_nextSortByRelevance = sortByRelevance;
 			var page:uint = offset / this._resultsPerPage;
-			
 			var workingCache:ArrayCollection;
 			var workingTotal:Number;
 			
@@ -140,15 +153,14 @@ package SearchLogic
 				workingCache = _dateCache;
 				workingTotal = _dateTotal;
 			}
-			
+
 			//check cache
 			if(workingCache != null && workingCache.length > page) 
 			{
-				
 				results = workingCache.getItemAt(page) as ArrayCollection;
 				currentPage = page;
 				total = workingTotal;
-				sortedByRelevance = sortByRelevance;
+				sortedByRelevance = _nextSortByRelevance;
 				var qe:QueryEvent = new QueryEvent(QueryEvent.COMPLETE);
 				qe.query = this;
 				ready = true;
@@ -171,6 +183,7 @@ package SearchLogic
 			{
 				 if((e as SearchResultEvent).result.News != null)
 				 {
+				 	this.sortedByRelevance = _nextSortByRelevance;
 					qe.query = this;
 					updateSearch((e as SearchResultEvent).result.News)
 				 }
@@ -207,16 +220,16 @@ package SearchLogic
 			var newTotal:Number;
 			var newCurrentPage:Number;
 			if(useRelevance)
-			{			
+			{	
 				newTotal = this._relevanceTotal = response.Total;
 				_relevanceCache.addItem(response.Results);
-				newCurrentPage = _relevanceCache.length; 
+				newCurrentPage = _relevanceCache.length-1; 
 			}	
 			else
 			{
 				newTotal = this._dateTotal = response.Total;
 				_dateCache.addItem(response.Results);
-				newCurrentPage = _dateCache.length;	
+				newCurrentPage = _dateCache.length-1;	
 			}
 			
 			//update local settings
@@ -224,6 +237,18 @@ package SearchLogic
 			this.total = newTotal;
 			this.currentPage = newCurrentPage;
 		}
+		
+		[Bindable(event='pageChanged')]
+		public function canGetNextPage():Boolean
+		{
+			return currentPage < totalPages-1;
+		}
+		
+		[Bindable(event='pageChanged')]
+		public function canGetPrevPage():Boolean
+		{
+			return currentPage > 0;	
+		} 
 		
 		public function nextPage():void
 		{

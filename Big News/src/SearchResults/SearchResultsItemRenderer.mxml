@@ -31,9 +31,7 @@
 				var dict:Dictionary = Query.urlHash;
 				if (dict[data.Url] != undefined)
 				{
-					relatedSearches = dict[data.Url];
-					trace(relatedSearches);
-					//TODO: Some tweaks need to be made here so that the LinkButton
+					relatedSearches = dict[data.Url];					//TODO: Some tweaks need to be made here so that the LinkButton
 					//is not enabled when the only match is from the search itself,
 					//since every search is also in the Hash, thus every item will
 					//have a similar search, itself, which is confusing to the user.

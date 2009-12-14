@@ -40,6 +40,7 @@ package SearchLogic
 		[Bindable(event='categoryChanged')]
 		public function get category():String
 		{ return _category; }
+		
 		public function set category(category:String):void
 		{
 			if(_category != category)
@@ -48,6 +49,9 @@ package SearchLogic
 				dispatchEvent(new Event("categoryChanged"));
 			}
 		}
+		
+		[Bindable]
+		public var loaded:Boolean = false; 
 		
 		private var _categoryHash:Object = {
 			"":"All",
@@ -165,6 +169,7 @@ package SearchLogic
 		
 		public function search(sortByRelevance:Boolean = true, offset:Number = 0):void
 		{
+			trace("searching");
 			if(!ready)
 			{
 				trace("can't search, not ready");
@@ -211,9 +216,11 @@ package SearchLogic
 		
 		private function handleSearch(e:Event):void
 		{
+			trace("got search back");
 			var qe:QueryEvent = new QueryEvent(QueryEvent.COMPLETE);
 			if (e is SearchResultEvent)
 			{
+				this.loaded = true;
 				 if((e as SearchResultEvent).result.News != null)
 				 {
 				 	this.sortedByRelevance = _nextSortByRelevance;
@@ -227,6 +234,8 @@ package SearchLogic
 					this.currentPage = -1;
 			     }
 			}
+			else
+				trace("search failed!", e);
 			
 			ready = true;
 			dispatchEvent(qe);

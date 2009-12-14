@@ -28,7 +28,7 @@
 					Application.application.openSearchResults();
 					if (event.query.total == 0)
 						Alert.show("No results for that query");
-				} 
+				}
 					
 			}
 			

@@ -58,7 +58,7 @@
 		    	styleName="TabNavigation"/>
 			
 			<mx:HBox width="100%" horizontalAlign="center">
-				<mx:TextInput id="query" editable="true" styleName="SearchBarInput"/>
+				<mx:TextInput id="query" editable="true" styleName="SearchBarInput" text="{Application.application.searchresults.history.selectedItem.query}"/>
 				<mx:Button id="searchbutton" label="Search" click="executeQuery()" styleName="SearchButton"/>
 			</mx:HBox>
 		</mx:VBox>

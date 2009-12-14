@@ -58,7 +58,7 @@
 	</mx:HBox>
 		
 	<mx:HBox width="100%" horizontalAlign="center">
-		<mx:Label id="pageNumber" styleName="SearchResultPageNumbers" text="Page {history.selectedItem.currentPage+1} of {history.selectedItem.totalPages}"/>
+		<mx:Label id="pageNumber" styleName="SearchResultPageNumbers" text="Page {history.selectedItem.currentPage+1} of {history.selectedItem.totalPages} (displaying {history.selectedItem.currentPage * 15}-{(history.selectedItem.currentPage + 1) * 15} of {history.selectedItem.total} results)"/>
     </mx:HBox>
     
 </mx:VBox>

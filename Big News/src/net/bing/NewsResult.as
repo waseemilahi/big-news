@@ -26,6 +26,6 @@ package net.bing
 		public var Snippet:String;
 		public var _Date:String;
 		public var BreakingNews:uint;
-		public var NewsCollections:net.bing.ArrayOfNewsCollection;
+		public var NewsCollections:ArrayOfNewsCollection;
 	}
 }

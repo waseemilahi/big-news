@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%"
-	verticalScrollPolicy="off" creationComplete="init()" paddingBottom="2" paddingLeft="2" paddingRight="2" paddingTop="2" xmlns:local="*">
+	verticalScrollPolicy="off" creationComplete="init()" paddingBottom="2" paddingLeft="2" paddingRight="2" paddingTop="2" xmlns:local="*" xmlns:flexgif="org.bytearray.gif.flexgif.*">
 
 	<mx:Script>
 		<![CDATA[
@@ -50,7 +50,7 @@
 		<mx:Spacer width="100%"/>
 	</mx:HBox>
 	<mx:HBox width="100%" id="hcatbar">
-		<mx:LinkButton label="BigNews" click="Application.application.openHeadlines();" textAlign="center" styleName="BigNewsHeading"/>
+		<mx:LinkButton label="BigNews" click="Application.application.openHeadlines();" textAlign="center" styleName="BigNewsHeading" enabled="{Application.application.resultViewStack.selectedIndex != 0}" toolTip="back to headlines"/>
 		<mx:Spacer width="100%"/>
 		<mx:VBox borderStyle="solid" borderThickness="1" paddingBottom="2"
 			horizontalScrollPolicy="off" verticalScrollPolicy="off" horizontalAlign="center">
@@ -63,7 +63,9 @@
 			</mx:HBox>
 		</mx:VBox>
 		<mx:Spacer width="100%"/>
+		<flexgif:AnimatedGIF id="spinner" source="assets/spinner.gif" visible="{!QueryHistory.instance.ready}" />
 		<local:StyleSelector/>
+
 	</mx:HBox>
 	
 </mx:VBox>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" xmlns:local="*"
-	paddingLeft="2" paddingBottom="15" paddingRight="2" xmlns:SearchResults="SearchResults.*">
+	paddingLeft="2" paddingBottom="15" paddingRight="2" xmlns:SearchResults="SearchResults.*" xmlns:flexgif="org.bytearray.gif.flexgif.*">
 
 	<mx:Script>
 		<![CDATA[
@@ -55,6 +55,7 @@
     <mx:HBox width="100%" horizontalAlign="center">
 		<mx:Button label="&lt;&lt;" click="QueryHistory.instance.currentQuery.prevPage();" styleName="SearchResultPageButtons" enabled="{QueryHistory.instance.currentQuery.canGetPrevPage()}"/>
 		<mx:Button label="&gt;&gt;" click="QueryHistory.instance.currentQuery.nextPage();" styleName="SearchResultPageButtons" enabled="{QueryHistory.instance.currentQuery.canGetNextPage()}"/>
+		<flexgif:AnimatedGIF id="spinner" source="assets/smallSpinner.gif" visible="{!history.selectedItem.ready}" />	
 	</mx:HBox>
 		
 	<mx:HBox width="100%" horizontalAlign="center">

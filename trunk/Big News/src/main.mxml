@@ -2,8 +2,11 @@
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" pageTitle="Big News" 
 	styleName="Application" layout="absolute" xmlns:local="*" height="100%" width="100%" autoLayout="true"
 	initialize="init()">
+	
+	
 	<mx:Script>
 		<![CDATA[
+			import org.bytearray.gif.player.GIFPlayer;
 			import SearchLogic.QueryHistory;
 			import mx.managers.BrowserManager;
 			import mx.managers.IBrowserManager;
@@ -64,6 +67,7 @@
 				StyleManager.getStyleDeclaration(".SliderText").setStyle("fontSize", 
 					int(StyleManager.getStyleDeclaration(".SliderText").getStyle("fontSize")) + amt);
 			}
+			
 		]]>
 	</mx:Script>
 	
@@ -144,7 +148,6 @@
 			<local:Headlines id="headlines" height="100%" width="100%"/>
 			<local:SearchResults id="searchresults" height="100%" width="100%"/>
 		</mx:ViewStack>
-	
 	</mx:VBox>
 	
 </mx:Application>

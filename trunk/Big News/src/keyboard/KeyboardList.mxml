@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:List xmlns:mx="http://www.adobe.com/2006/mxml" keyDown="Application.application.handleKey(event)">
+<mx:Script>
+	<![CDATA[
+		import mx.core.Application;
+	]]>
+</mx:Script>
+</mx:List>

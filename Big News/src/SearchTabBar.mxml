@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="400" height="300">
+	<mx:Script>
+		<![CDATA[
+			[Bindable]
+			public var categories:ArrayCollection = new ArrayCollection([{name: "All", queryString: ""},
+							{name: "Business", queryString: "rt_Business"}, 
+							{name: "Entertainment", queryString: "rt_Entertainment"}, 
+							{name: "Health", queryString: "rt_Health"}, 
+							{name: "Politics", queryString: "rt_Political"}, 
+							{name: "Scientific", queryString: "rt_Scientific"}, 
+							{name: "Sports", queryString: "rt_Sports"}, 
+							{name: "United States", queryString: "rt_US"}, 
+							{name: "World", queryString: "rt_World"}, 
+							{name: "Local", queryString: "rt_Local"}, 
+							{name: "IT", queryString: "rt_ScienceAndTechnology"}]);
+		
+		]]>
+		[Bindable]
+		var dataProvider:Object
+	</mx:Script>
+	
+	<mx:TabBar id="categoryBar" dataProvider="{categories}" labelField="name"
+	   	styleName="TabNavigation"/>
+
+</mx:VBox>

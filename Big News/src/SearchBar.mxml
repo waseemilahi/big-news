@@ -10,17 +10,31 @@
 			import mx.core.Application;
 			import mx.collections.ArrayCollection;
 
-						
+			private function init():void
+			{
+				QueryHistory.instance.addEventListener(QueryEvent.COMPLETE, handleSearchResults);
+				Application.application.headlines.addEventListener("startSpinning", updateSpinner);
+				Application.application.headlines.addEventListener("stopSpinning", updateSpinner);
+			}
+				
+			private function updateSpinner(event:Event):void
+			{
+				if(event.type == "startSpinning")
+					showSpinner = true;
+				else
+					showSpinner = false;
+			}		
 			public function executeQuery():void
 			{
 				if(query.text.length == 0)
 					return;
-				QueryHistory.instance.addEventListener(QueryEvent.COMPLETE, handleSearchResults);
-				QueryHistory.instance.getQuery(this.query.text, this.categories[categoryBar.selectedIndex].queryString);								
+				showSpinner = true;								
+				QueryHistory.instance.getQuery(this.query.text, this.categories[categoryBar.selectedIndex].queryString);
 			}
 						
 			private function handleSearchResults(event:QueryEvent):void
 			{
+				showSpinner = false;
 				if(event.fail)
 					Alert.show("Error processing query, please try again");
 				else
@@ -31,8 +45,7 @@
 				}
 					
 			}
-			
-			[Bindable]
+					[Bindable]
 			public var categories:ArrayCollection = new ArrayCollection([{name: "All", queryString: ""},
 							{name: "Business", queryString: "rt_Business"}, 
 							{name: "Entertainment", queryString: "rt_Entertainment"}, 
@@ -44,28 +57,31 @@
 							{name: "World", queryString: "rt_World"}, 
 							{name: "Local", queryString: "rt_Local"}, 
 							{name: "IT", queryString: "rt_ScienceAndTechnology"}]);
-		]]>
+
+		[Bindable]
+		public var showSpinner:Boolean = true;
+
+		]]>	
 	</mx:Script>
 	<mx:HBox width="100%">
 		<mx:Spacer width="100%"/>
 	</mx:HBox>
-	<mx:HBox width="100%" id="hcatbar">
-		<mx:LinkButton label="BigNews" click="Application.application.openHeadlines();" textAlign="center" styleName="BigNewsHeading" enabled="{Application.application.resultViewStack.selectedIndex != 0}" toolTip="back to headlines"/>
-		<mx:Spacer width="100%"/>
-		<mx:VBox borderStyle="solid" borderThickness="1" paddingBottom="2"
-			horizontalScrollPolicy="off" verticalScrollPolicy="off" horizontalAlign="center">
-		    <mx:TabBar id="categoryBar" dataProvider="{categories}" labelField="name"
-		    	styleName="TabNavigation"/>
-			
+	<mx:VBox width="100%">
+		<mx:TabBar id="categoryBar" dataProvider="{categories}" labelField="name"
+		   	styleName="TabNavigation" width="100%"/>						
+		<mx:HBox width="100%" id="hcatbar">
+			<mx:VBox>
+				<mx:LinkButton label="BigNews" click="Application.application.openHeadlines();" textAlign="center" styleName="BigNewsHeading" enabled="{Application.application.resultViewStack.selectedIndex != 0}" toolTip="back to headlines"/>
+			<local:StyleSelector/>	
+			</mx:VBox>
+			<mx:Spacer width="100%"/>
 			<mx:HBox width="100%" horizontalAlign="center">
 				<mx:TextInput id="query" editable="true" styleName="SearchBarInput" text="{Application.application.searchresults.history.selectedItem.query}" enter="executeQuery()"/>
 				<mx:Button id="searchbutton" label="Search" click="executeQuery()" styleName="SearchButton"/>
 			</mx:HBox>
-		</mx:VBox>
-		<mx:Spacer width="100%"/>
-		<flexgif:AnimatedGIF id="spinner" source="assets/spinner.gif" visible="{!QueryHistory.instance.ready}" />
-		<local:StyleSelector/>
-
-	</mx:HBox>
+			<mx:Spacer width="100%"/>
+			<flexgif:AnimatedGIF id="spinner" source="assets/spinner.gif" visible="{showSpinner}"/>		
+		</mx:HBox>
+	</mx:VBox>
 	
 </mx:VBox>

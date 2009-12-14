@@ -49,14 +49,15 @@
 				else
 					query = category["query"];
 				
+				dispatchEvent(new Event("startSpinning"));
 				query.addEventListener(QueryEvent.COMPLETE, queryReady);
 				query.search();
-				
 			} 
 			
 			private function queryReady(event:Event):void
 			{
 				headlinesView.dataProvider = _categories.getItemAt(_categoryBar.selectedIndex).query.results;
+				dispatchEvent(new Event("stopSpinning"));
 			}
 			
 			private function enterHandler(event:KeyboardEvent):void

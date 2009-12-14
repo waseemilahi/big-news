@@ -36,8 +36,38 @@ package SearchLogic
 		[Bindable]
 		public var query:String;
 		
-		[Bindable]
-		public var category:String;
+		private var _category:String;
+		[Bindable(event='categoryChanged')]
+		public function get category():String
+		{ return _category; }
+		public function set category(category:String):void
+		{
+			if(_category != category)
+			{
+				_category = category;
+				dispatchEvent(new Event("categoryChanged"));
+			}
+		}
+		
+		private var _categoryHash:Object = {
+			"":"All",
+			"rt_Business":"Business",  
+			rt_Entertainment:"Entertainment",  
+			rt_Health:"Health",  
+			rt_Political:"Politics",  
+			rt_Scientific:"Scientific",  
+			rt_Sports:"Sports",  
+			rt_US:"United States",  
+			rt_World:"World",  
+			rt_Local:"Local",  
+			rt_ScienceAndTechnology:"IT"
+		};
+		
+		[Bindable(event='categoryChanged')]
+		public function get readableCategory():String
+		{
+				return _categoryHash[category];				
+		}
 		
 		[Bindable]
 		public var results:ArrayCollection = new ArrayCollection();

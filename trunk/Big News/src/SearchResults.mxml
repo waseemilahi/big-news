@@ -17,8 +17,15 @@
 			[Bindable]
 			public var pagableData:PagableArrayCollection;
 						
-			//Flex calls this a Dictionary, but its commonly known as a Hashmap
-						
+			private function enterHandler(event:KeyboardEvent):void
+			{
+				if(event.keyCode == Keyboard.ENTER)
+				{
+					var urlRequest:URLRequest = new URLRequest(list.selectedItem.Url);
+    	            navigateToURL(urlRequest, "_blank");
+				}
+			}
+			
 		]]>
 	</mx:Script>
 	
@@ -35,7 +42,7 @@
 				creationPolicy="all" styleName="TabNavigation"> -->
 			
 				<mx:VBox label="Sort by Relevance" width="100%" height="100%">
-					<mx:List id="list" width="100%" itemRenderer="SearchResults.SearchResultsItemRenderer" height="100%" dataProvider="{history.selectedItem.results}"/>
+					<mx:List id="list" width="100%" itemRenderer="SearchResults.SearchResultsItemRenderer" height="100%" dataProvider="{history.selectedItem.results}" keyDown="enterHandler(event)"/>
 				</mx:VBox>
 			
 				<!-- <mx:VBox  label="Sort by Date" width="100%" height="100%">

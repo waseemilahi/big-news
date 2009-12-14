@@ -87,6 +87,8 @@
 			font-size:34;
 			font-family:Arial;
 			font-weight:bold;
+			disabledColor: #496b73;
+			
 		}
 		.TabNavigation {
 			font-size:12;

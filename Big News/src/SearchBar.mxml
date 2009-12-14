@@ -34,35 +34,36 @@
 			
 			[Bindable]
 			public var categories:ArrayCollection = new ArrayCollection([{name: "All", queryString: ""},
-							{name: "Business", queryString: "Business"}, 
-							{name: "Entertainment", queryString: "Entertainment"}, 
-							{name: "Health", queryString: "Health"}, 
-							{name: "Politics", queryString: "Political"}, 
-							{name: "Scientific", queryString: "Scientific"}, 
-							{name: "Sports", queryString: "Sports"}, 
-							{name: "United States", queryString: "US"}, 
-							{name: "World", queryString: "World"}, 
-							{name: "Local", queryString: "Local"}, 
-							{name: "IT", queryString: "ScienceAndTechnology"}]);
+							{name: "Business", queryString: "rt_Business"}, 
+							{name: "Entertainment", queryString: "rt_Entertainment"}, 
+							{name: "Health", queryString: "rt_Health"}, 
+							{name: "Politics", queryString: "rt_Political"}, 
+							{name: "Scientific", queryString: "rt_Scientific"}, 
+							{name: "Sports", queryString: "rt_Sports"}, 
+							{name: "United States", queryString: "rt_US"}, 
+							{name: "World", queryString: "rt_World"}, 
+							{name: "Local", queryString: "rt_Local"}, 
+							{name: "IT", queryString: "rt_ScienceAndTechnology"}]);
 		]]>
 	</mx:Script>
 	<mx:HBox width="100%">
-		<mx:LinkButton label="BigNews" click="Application.application.openHeadlines();" textAlign="center" styleName="BigNewsHeading"/>
 		<mx:Spacer width="100%"/>
-		<local:StyleSelector/>
 	</mx:HBox>
 	<mx:HBox width="100%" id="hcatbar">
+		<mx:LinkButton label="BigNews" click="Application.application.openHeadlines();" textAlign="center" styleName="BigNewsHeading"/>
+		<mx:Spacer width="100%"/>
 		<mx:VBox borderStyle="solid" borderThickness="1" paddingBottom="2"
 			horizontalScrollPolicy="off" verticalScrollPolicy="off" horizontalAlign="center">
 		    <mx:TabBar id="categoryBar" dataProvider="{categories}" labelField="name"
 		    	styleName="TabNavigation"/>
 			
 			<mx:HBox width="100%" horizontalAlign="center">
-				<mx:TextInput id="query" editable="true" styleName="SearchBarInput" text="{Application.application.searchresults.history.selectedItem.query}"/>
+				<mx:TextInput id="query" editable="true" styleName="SearchBarInput" text="{Application.application.searchresults.history.selectedItem.query}" enter="executeQuery()"/>
 				<mx:Button id="searchbutton" label="Search" click="executeQuery()" styleName="SearchButton"/>
 			</mx:HBox>
 		</mx:VBox>
 		<mx:Spacer width="100%"/>
+		<local:StyleSelector/>
 	</mx:HBox>
 	
 </mx:VBox>

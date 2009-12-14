@@ -30,15 +30,15 @@ package SearchLogic
 			dispatchEvent(new Event("indexChanged"));	
 		}
 		
-		[Bindable(event='indexChanged')]
-		public function get currentQuery():Query
-		{
-			if(isNaN(currentIndex))
-				return null;
-			else
-				return history[currentIndex];
-				
-		}
+//		[Bindable(event='indexChanged')]
+//		public function get currentQuery():Query
+//		{
+//			if(isNaN(currentIndex))
+//				return null;
+//			else
+//				return history[currentIndex];
+//				
+//		}
 
 		private static var _instance:QueryHistory;
 		

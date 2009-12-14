@@ -53,8 +53,8 @@
     </mx:HDividedBox>
     
     <mx:HBox width="100%" horizontalAlign="center">
-		<mx:Button label="&lt;&lt;" click="QueryHistory.instance.currentQuery.prevPage();" styleName="SearchResultPageButtons" enabled="{QueryHistory.instance.currentQuery.canGetPrevPage()}"/>
-		<mx:Button label="&gt;&gt;" click="QueryHistory.instance.currentQuery.nextPage();" styleName="SearchResultPageButtons" enabled="{QueryHistory.instance.currentQuery.canGetNextPage()}"/>
+		<mx:Button label="&lt;&lt;" click="history.selectedItem.prevPage();" styleName="SearchResultPageButtons" enabled="{history.selectedItem.canPrevPage}"/>
+		<mx:Button label="&gt;&gt;" click="history.selectedItem.nextPage();" styleName="SearchResultPageButtons" enabled="{history.selectedItem.canNextPage}"/>
 		<flexgif:AnimatedGIF id="spinner" source="assets/smallSpinner.gif" visible="{!history.selectedItem.ready}" />	
 	</mx:HBox>
 		

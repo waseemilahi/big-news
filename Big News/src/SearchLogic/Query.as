@@ -83,8 +83,11 @@ package SearchLogic
 		}
 		public function set currentPage(page:Number):void
 		{
+			trace("changing page  from ", _currentPage, "  to ", page);
+			
 			if(_currentPage != page)
 			{
+				trace("changing page");
 				_currentPage = page
 				dispatchEvent(new Event('pageChanged'));
 			}
@@ -269,13 +272,13 @@ package SearchLogic
 		}
 		
 		[Bindable(event='pageChanged')]
-		public function canGetNextPage():Boolean
+		public function get canNextPage():Boolean
 		{
 			return currentPage < totalPages-1;
 		}
 		
 		[Bindable(event='pageChanged')]
-		public function canGetPrevPage():Boolean
+		public function get canPrevPage():Boolean
 		{
 			return currentPage > 0;	
 		} 

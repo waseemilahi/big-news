@@ -66,17 +66,19 @@
 				[{font:"22"}, {font:"21"}, {font:"20"}, {font:"19"}, {font:"18"}, {font:"17"},
 				{font:"16"}, {font:"15"}, {font:"14"}, {font:"13"}, {font:"12"}, {font:"11"},
 				{font:"10"}, {font:"9"}, {font:"8"}, {font:"7"}]);
-				
+				list.selectedIndex = 1;
 				titleWindow = new TitleWindow();
                 titleWindow.title = "Please select font size";
                 var sts:StyleSelector = new StyleSelector();
-                list.addEventListener(ListEvent.ITEM_CLICK, sts.fontSizeChange);
+                list.addEventListener(ListEvent.CHANGE, sts.fontSizeChange);
               	titleWindow.addEventListener(KeyboardEvent.KEY_UP, fontWizardEnterHandler);
               	titleWindow.addEventListener(FlexEvent.CREATION_COMPLETE, fontWizardFocus);
                 var currentSize:int = int(StyleManager.getStyleDeclaration(".ArticleSnippet").getStyle("fontSize"));
                 list.selectedIndex = 22 - currentSize;
                 var vbox:VBox = new VBox();
                 vbox.addChild(sts);
+                sts.visible = false;
+                sts.height = 0;
                 vbox.percentWidth = 100;
                 vbox.setStyle("horizontalAlign", "center");
              	sts.setStyle("horizontalAlign", "center");
@@ -95,6 +97,8 @@
 			
 			private function fontWizardEnterHandler(event:KeyboardEvent):void
 			{
+
+			
 				if (event.keyCode == 13) {
 					PopUpManager.removePopUp(titleWindow);
 				}
@@ -257,7 +261,7 @@
 			font-weight:normal;
 		}
 	</mx:Style>
-	
+
 	<mx:VBox width="100%" height="100%">
 		<local:SearchBar id="searchbar" width="100%"/>
 		<mx:ViewStack id="resultViewStack" width="100%" height="100%" selectedIndex="0" creationPolicy="all">

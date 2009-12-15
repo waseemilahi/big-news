@@ -49,7 +49,7 @@
 		</mx:VBox>
 		<mx:VBox width="20%" height="100%" horizontalAlign="center">
 		<mx:Label text="Previous searches" styleName="CategoryHeading"/>
-		<keyboard:KeyboardList id="history" itemRenderer="SearchResults.HistoryItemRenderer"
+		<keyboard:KeyboardList id="history" itemRenderer="SearchResults.HistoryItemRenderer" horizontalScrollPolicy="on"
 			dataProvider="{QueryHistory.instance.history}" labelField="query" width="100%" height="100%" selectedIndex="{QueryHistory.instance.currentIndex}"/>
 		</mx:VBox>
 	    

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" pageTitle="Big News" 
 	styleName="Application" layout="absolute" xmlns:local="*" height="100%" width="100%" autoLayout="true"
-	initialize="init()"
-	 applicationComplete="complete()">
+	initialize="init()" applicationComplete="complete()">
 	
 	
 	<mx:Script>
@@ -45,31 +44,51 @@
 			
 			public function handleKey(event:KeyboardEvent):void
 			{
-				//focus on categories
-				//ctrl-d
-				if(event.ctrlKey)
+				//mapped to the center row of keyboard
+				switch(event.keyCode)
 				{
-					var c:Keyboard;
-					switch(event.keyCode)
-					{
-						case 68: 
-							searchbar.categoryBar.setFocus();
-						break;
-						case 76:
-							searchbar.query.setFocus();
-						default:
-					}
+					//note that the keycode for a key pressed
+					//with ctrl down does not equal the keycode
+					//without the ctrl key
+					
+					case 4:  //category bar ctrl d
+						searchbar.categoryBar.setFocus();
+					break;
+					case 19: //search bar ctrl s
+						searchbar.query.setFocus();
+					break;
+					case 8: //history ctrl h
+						openSearchResults();
+						searchresults.history.setFocus();
+					break;
+					case 11: //next page ctrl k
+						openSearchResults();
+						if (searchresults.history.selectedItem != null) {
+							searchresults.history.selectedItem.nextPage();
+						}
+					break;
+					case 10: //previous page ctrl j
+						openSearchResults();
+						if (searchresults.history.selectedItem != null) {
+							searchresults.history.selectedItem.prevPage();
+						}
+					break;
+					case 189: //zoom out ctrl -
+						changeFontSize(-1);
+					break;
+					case 187: //zoom in ctrl +
+						changeFontSize(1);
+					break;
+					case 6: //switch to and focus on headlines ctrl f
+						openHeadlines();
+						headlines.headlinesView.setFocus();
+					break;
+					case 7: //switch to and focus on search results ctrl g
+						openSearchResults();
+						searchresults.list.setFocus();
+					break;
+					default:
 				}
-				//focus on search bar
-				//focus on headlines / search results
-				//focus on history
-				//next page
-				//previous page
-				//zoom in
-				//zoom out
-				//go to headlines
-				//go to search results
-
 			}
 			
 			public function changeFontSize(amt:int):void

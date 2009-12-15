@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Label xmlns:mx="http://www.adobe.com/2006/mxml" text="Lorem ipsum dolor sit amet." fontSize="{data.font}">
-	
+<mx:Label xmlns:mx="http://www.adobe.com/2006/mxml" text="Lorem ipsum dolor sit amet." dataChange="dataChangeHandler(event)" fontSize="{size}">
+	<mx:Script>
+		<![CDATA[
+		
+			[Bindable]
+			private var size:int = 12;
+			
+			private function dataChangeHandler(event:Event):void
+			{
+				size = data.font;
+			}
+		]]>
+	</mx:Script>
 </mx:Label>

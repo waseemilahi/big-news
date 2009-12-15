@@ -63,28 +63,19 @@
 
 		]]>	
 	</mx:Script>
-	<mx:HBox width="100%">
+	<keyboard:KeyboardTabBar id="categoryBar" dataProvider="{categories}" labelField="name"
+		styleName="TabNavigation" width="100%"/>						
+	<mx:HBox width="100%" id="hcatbar">
+		<mx:VBox>
+			<mx:LinkButton label="BigNews" click="Application.application.openHeadlines();" textAlign="center" styleName="BigNewsHeading" enabled="{Application.application.resultViewStack.selectedIndex != 0}" toolTip="back to headlines"/>
+		</mx:VBox>
 		<mx:Spacer width="100%"/>
-	</mx:HBox>
-	<mx:VBox width="100%">
-		<keyboard:KeyboardTabBar id="categoryBar" dataProvider="{categories}" labelField="name"
-		   	styleName="TabNavigation" width="100%"/>						
-		<mx:HBox width="100%" id="hcatbar">
-			<mx:VBox>
-				<mx:LinkButton label="BigNews" click="Application.application.openHeadlines();" textAlign="center" styleName="BigNewsHeading" enabled="{Application.application.resultViewStack.selectedIndex != 0}" toolTip="back to headlines"/>
-			</mx:VBox>
-			<mx:Spacer width="100%"/>
-			<mx:HBox width="100%" horizontalAlign="center">
-				<mx:TextInput id="query" editable="true" styleName="SearchBarInput" text="{Application.application.searchresults.history.selectedItem.query}" enter="executeQuery()"/>
-				<mx:Button id="searchbutton" label="Search" click="executeQuery()" styleName="SearchButton"/>
-			</mx:HBox>
-			<mx:Spacer width="100%"/>
-			<mx:VBox>
-				<flexgif:AnimatedGIF id="spinner" source="assets/spinner.gif" visible="{showSpinner}"/>
-				<mx:Spacer height="100%"/>
-				<mx:Button label="Adjust Font Size" click="Application.application.showFontWizard()" styleName="SearchButton"/>
-			</mx:VBox>
+		<mx:HBox width="100%" horizontalAlign="center">
+			<mx:TextInput id="query" editable="true" styleName="SearchBarInput" text="{Application.application.searchresults.history.selectedItem.query}" enter="executeQuery()"/>
+			<mx:Button id="searchbutton" label="Search" click="executeQuery()" styleName="SearchButton"/>
 		</mx:HBox>
-	</mx:VBox>
-	
+		<mx:Spacer width="100%"/>
+		<flexgif:AnimatedGIF id="spinner" source="assets/spinner.gif" visible="{showSpinner}"/>
+		<mx:Button label="Adjust Font Size" click="Application.application.showFontWizard()" styleName="SearchButton"/>
+	</mx:HBox>
 </mx:VBox>

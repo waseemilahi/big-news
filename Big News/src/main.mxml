@@ -6,6 +6,13 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import mx.events.ListEvent;
+			import mx.containers.HBox;
+			import mx.collections.ArrayCollection;
+			import mx.controls.List;
+			import mx.controls.Label;
+			import mx.controls.Text;
+			import mx.containers.VBox;
 			import org.bytearray.gif.player.GIFPlayer;
 			import SearchLogic.QueryHistory;
 			import mx.managers.BrowserManager;
@@ -15,6 +22,12 @@
 			import mx.managers.PopUpManager;
 			import mx.events.CloseEvent;
 			Security.loadPolicyFile("http://api.bing.net/crossdomain.xml");
+			
+			[Bindable]
+			private var titleWindow:TitleWindow;
+			
+			[Bindable]
+			public var list:List;
 						
 			public function openHeadlines():void
 			{
@@ -40,54 +53,86 @@
 			private function complete():void
 			{
 				stage.addEventListener(KeyboardEvent.KEY_DOWN, handleKey);	
+				
+				showFontWizard();
+			}
+			
+			public function showFontWizard():void
+			{
+				list = new List();
+				list.itemRenderer = new ClassFactory(FontWizardListRenderer);
+				list.dataProvider = new ArrayCollection(
+				[{font:"22"}, {font:"21"}, {font:"20"}, {font:"19"}, {font:"18"}, {font:"17"},
+				{font:"16"}, {font:"15"}, {font:"14"}, {font:"13"}, {font:"12"}, {font:"11"},
+				{font:"10"}, {font:"9"}, {font:"8"}, {font:"7"}]);
+				
+				titleWindow = new TitleWindow();
+                titleWindow.title = "Please select font size";
+                var sts:StyleSelector = new StyleSelector();
+                list.addEventListener(ListEvent.ITEM_CLICK, sts.fontSizeChange);
+                list.selectedIndex = 10;
+                var vbox:VBox = new VBox();
+                vbox.addChild(sts);
+                vbox.percentWidth = 100;
+                vbox.setStyle("horizontalAlign", "center");
+             	sts.setStyle("horizontalAlign", "center");
+                titleWindow.addChild(vbox);
+                titleWindow.addChild(list);
+                titleWindow.showCloseButton = true;
+                titleWindow.addEventListener(CloseEvent.CLOSE, closeFontWizard);
+                PopUpManager.addPopUp(titleWindow, this, true);
+                PopUpManager.centerPopUp(titleWindow);
+			}
+			
+			private function closeFontWizard(event:CloseEvent):void
+			{
+				PopUpManager.removePopUp(titleWindow);
 			}
 			
 			public function handleKey(event:KeyboardEvent):void
 			{
-				//mapped to the center row of keyboard
-				switch(event.keyCode)
-				{
-					//note that the keycode for a key pressed
-					//with ctrl down does not equal the keycode
-					//without the ctrl key
-					
-					case 4:  //category bar ctrl d
-						searchbar.categoryBar.setFocus();
-					break;
-					case 19: //search bar ctrl s
-						searchbar.query.setFocus();
-					break;
-					case 8: //history ctrl h
-						openSearchResults();
-						searchresults.history.setFocus();
-					break;
-					case 11: //next page ctrl k
-						openSearchResults();
-						if (searchresults.history.selectedItem != null) {
-							searchresults.history.selectedItem.nextPage();
-						}
-					break;
-					case 10: //previous page ctrl j
-						openSearchResults();
-						if (searchresults.history.selectedItem != null) {
-							searchresults.history.selectedItem.prevPage();
-						}
-					break;
-					case 189: //zoom out ctrl -
-						changeFontSize(-1);
-					break;
-					case 187: //zoom in ctrl +
-						changeFontSize(1);
-					break;
-					case 6: //switch to and focus on headlines ctrl f
-						openHeadlines();
-						headlines.headlinesView.setFocus();
-					break;
-					case 7: //switch to and focus on search results ctrl g
-						openSearchResults();
-						searchresults.list.setFocus();
-					break;
-					default:
+				if (event.ctrlKey) {
+					//mapped to the center row of keyboard
+					switch(event.keyCode)
+					{	
+						case 4:  //category bar ctrl d
+							searchbar.categoryBar.setFocus();
+						break;
+						case 19: //search bar ctrl s
+							searchbar.query.setFocus();
+						break;
+						case 8: //history ctrl h
+							openSearchResults();
+							searchresults.history.setFocus();
+						break;
+						case 11: //next page ctrl k
+							openSearchResults();
+							if (searchresults.history.selectedItem != null) {
+								searchresults.history.selectedItem.nextPage();
+							}
+						break;
+						case 10: //previous page ctrl j
+							openSearchResults();
+							if (searchresults.history.selectedItem != null) {
+								searchresults.history.selectedItem.prevPage();
+							}
+						break;
+						case 189: //zoom out ctrl -
+							changeFontSize(-1);
+						break;
+						case 187: //zoom in ctrl +
+							changeFontSize(1);
+						break;
+						case 6: //switch to and focus on headlines ctrl f
+							openHeadlines();
+							headlines.headlinesView.setFocus();
+						break;
+						case 7: //switch to and focus on search results ctrl g
+							openSearchResults();
+							searchresults.list.setFocus();
+						break;
+						default:
+					}
 				}
 			}
 			
@@ -142,7 +187,6 @@
 			font-family:Arial;
 			font-weight:bold;
 			disabledColor: #496b73;
-			
 		}
 		.TabNavigation {
 			font-size:12;

@@ -72,7 +72,6 @@
 		<mx:HBox width="100%" id="hcatbar">
 			<mx:VBox>
 				<mx:LinkButton label="BigNews" click="Application.application.openHeadlines();" textAlign="center" styleName="BigNewsHeading" enabled="{Application.application.resultViewStack.selectedIndex != 0}" toolTip="back to headlines"/>
-			<!--<local:StyleSelector/> -->	
 			</mx:VBox>
 			<mx:Spacer width="100%"/>
 			<mx:HBox width="100%" horizontalAlign="center">
@@ -80,7 +79,11 @@
 				<mx:Button id="searchbutton" label="Search" click="executeQuery()" styleName="SearchButton"/>
 			</mx:HBox>
 			<mx:Spacer width="100%"/>
-			<flexgif:AnimatedGIF id="spinner" source="assets/spinner.gif" visible="{showSpinner}"/>		
+			<mx:VBox>
+				<flexgif:AnimatedGIF id="spinner" source="assets/spinner.gif" visible="{showSpinner}"/>
+				<mx:Spacer height="100%"/>
+				<mx:Button label="Adjust Font Size" click="Application.application.showFontWizard()" styleName="SearchButton"/>
+			</mx:VBox>
 		</mx:HBox>
 	</mx:VBox>
 	

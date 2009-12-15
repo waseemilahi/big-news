@@ -6,6 +6,7 @@
 		
 	<mx:Script>
 		<![CDATA[
+			import mx.events.ListEvent;
 			import mx.controls.sliderClasses.Slider;
 			import mx.core.Application;
 			import mx.events.SliderEvent;
@@ -22,6 +23,21 @@
 			{
 				var currentSlider:Slider = Slider(event.currentTarget);
                 var increment:int = int(currentSlider.value);
+				Application.application.changeFontSize(increment - lastposition);
+				lastposition = increment;
+				if (Application.application.list != null) {
+					if (increment < 0) {
+						Application.application.list.selectedIndex = 10 + Math.abs(increment);
+					} else {
+						Application.application.list.selectedIndex = 10 - increment;
+					}
+				}
+			}
+			
+			public function fontSizeChange(event:ListEvent):void
+			{
+                var increment:int = 10 - event.rowIndex;
+                hslider.setThumbValueAt(0, 10 - event.rowIndex);
 				Application.application.changeFontSize(increment - lastposition);
 				lastposition = increment;
 			}

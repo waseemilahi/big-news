@@ -71,6 +71,8 @@
                 titleWindow.title = "Please select font size";
                 var sts:StyleSelector = new StyleSelector();
                 list.addEventListener(ListEvent.CHANGE, sts.fontSizeChange);
+                list.doubleClickEnabled=true;
+              	list.addEventListener(ListEvent.ITEM_DOUBLE_CLICK, closeFontWizard);
               	titleWindow.addEventListener(KeyboardEvent.KEY_UP, fontWizardEnterHandler);
               	titleWindow.addEventListener(FlexEvent.CREATION_COMPLETE, fontWizardFocus);
                 var currentSize:int = int(StyleManager.getStyleDeclaration(".ArticleSnippet").getStyle("fontSize"));
@@ -104,7 +106,7 @@
 				}
 			}
 			
-			private function closeFontWizard(event:CloseEvent):void
+			private function closeFontWizard(event:Event):void
 			{
 				PopUpManager.removePopUp(titleWindow);
 			}

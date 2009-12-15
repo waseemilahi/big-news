@@ -15,8 +15,9 @@
 			
 			private function init():void
 			{
-				hslider.setThumbValueAt(0, 0);
-				lastposition = 0;
+				var currentSize:int = int(StyleManager.getStyleDeclaration(".ArticleSnippet").getStyle("fontSize"));
+				hslider.setThumbValueAt(0, currentSize - 12);
+				lastposition = currentSize - 12;
 			}
 			
 			private function changeHandler(event:SliderEvent):void
@@ -32,6 +33,12 @@
 						Application.application.list.selectedIndex = 10 - increment;
 					}
 				}
+			}
+			
+			public function setSlider(index:int):void
+			{
+				hslider.setThumbValueAt(0, index);
+				lastposition = index;
 			}
 			
 			public function fontSizeChange(event:ListEvent):void

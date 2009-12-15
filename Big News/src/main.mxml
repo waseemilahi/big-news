@@ -6,6 +6,7 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import mx.events.FlexEvent;
 			import mx.events.ListEvent;
 			import mx.containers.HBox;
 			import mx.collections.ArrayCollection;
@@ -70,7 +71,10 @@
                 titleWindow.title = "Please select font size";
                 var sts:StyleSelector = new StyleSelector();
                 list.addEventListener(ListEvent.ITEM_CLICK, sts.fontSizeChange);
-                list.selectedIndex = 10;
+              	titleWindow.addEventListener(KeyboardEvent.KEY_UP, fontWizardEnterHandler);
+              	titleWindow.addEventListener(FlexEvent.CREATION_COMPLETE, fontWizardFocus);
+                var currentSize:int = int(StyleManager.getStyleDeclaration(".ArticleSnippet").getStyle("fontSize"));
+                list.selectedIndex = 22 - currentSize;
                 var vbox:VBox = new VBox();
                 vbox.addChild(sts);
                 vbox.percentWidth = 100;
@@ -82,6 +86,18 @@
                 titleWindow.addEventListener(CloseEvent.CLOSE, closeFontWizard);
                 PopUpManager.addPopUp(titleWindow, this, true);
                 PopUpManager.centerPopUp(titleWindow);
+			}
+			
+			private function fontWizardFocus(event:Event):void
+			{
+				list.setFocus();
+			}
+			
+			private function fontWizardEnterHandler(event:KeyboardEvent):void
+			{
+				if (event.keyCode == 13) {
+					PopUpManager.removePopUp(titleWindow);
+				}
 			}
 			
 			private function closeFontWizard(event:CloseEvent):void
